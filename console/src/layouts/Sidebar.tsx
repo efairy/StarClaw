@@ -26,6 +26,7 @@ import {
   Settings,
   Shield,
   Plug,
+  ExternalLink,
   Wrench,
   BarChart3,
   Mic,
@@ -186,6 +187,12 @@ export default function Sidebar({ selectedKey }: SidebarProps) {
     },
     { key: "mcp", icon: <Plug size={18} />, path: "/mcp", label: t("nav.mcp") },
     {
+      key: "external",
+      icon: <ExternalLink size={18} />,
+      path: "/external",
+      label: t("nav.external"),
+    },
+    {
       key: "agent-config",
       icon: <Settings size={18} />,
       path: "/agent-config",
@@ -291,6 +298,11 @@ export default function Sidebar({ selectedKey }: SidebarProps) {
           key: "mcp",
           label: collapsed ? null : t("nav.mcp"),
           icon: <Plug size={16} />,
+        },
+        {
+          key: "external",
+          label: collapsed ? null : t("nav.external"),
+          icon: <ExternalLink size={16} />,
         },
         {
           key: "agent-config",

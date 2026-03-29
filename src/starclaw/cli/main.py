@@ -132,6 +132,11 @@ class LazyGroup(click.Group):
         "auth": ("starclaw.cli.auth_cmd", "auth_group", ".auth_cmd"),
         "agents": ("starclaw.cli.agents_cmd", "agents_group", ".agents_cmd"),
         "agent": ("starclaw.cli.agents_cmd", "agents_group", ".agents_cmd"),
+        "external": (
+            "starclaw.cli.external_cmd",
+            "external_group",
+            ".external_cmd",
+        ),
     },
 )
 @click.version_option(version=__version__, prog_name="StarClaw")

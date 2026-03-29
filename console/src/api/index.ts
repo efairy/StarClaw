@@ -21,6 +21,7 @@ import { mcpApi } from "./modules/mcp";
 import { tokenUsageApi } from "./modules/tokenUsage";
 import { toolsApi } from "./modules/tools";
 import { securityApi } from "./modules/security";
+import { externalApi } from "./modules/external";
 import { userTimezoneApi } from "./modules/userTimezone";
 
 export const api = {
@@ -73,6 +74,9 @@ export const api = {
 
   // Security
   ...securityApi,
+
+  // External Agents
+  ...externalApi,
 
   // User Timezone
   ...userTimezoneApi,

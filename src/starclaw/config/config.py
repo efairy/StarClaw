@@ -675,6 +675,10 @@ class AgentProfileConfig(BaseModel):
         default=None,
         description="Security configuration for this agent",
     )
+    external: Optional["ExternalConfig"] = Field(
+        default=None,
+        description="External agents configuration",
+    )
 
 
 class AgentsConfig(BaseModel):
@@ -755,6 +759,30 @@ class LastDispatchConfig(BaseModel):
     channel: str = ""
     user_id: str = ""
     session_id: str = ""
+
+
+class ExternalAgentConfig(BaseModel):
+    """Configuration for a single external agent."""
+
+    model_config = ConfigDict(populate_by_name=True)
+
+    name: str
+    description: str = ""
+    enabled: bool = True
+    url: str = ""
+    api_key: str = ""
+    headers: Dict[str, str] = Field(default_factory=dict)
+    stream: bool = True
+    background: bool = False
+    format: Literal["auto", "dashscope_v1", "openai_responses"] = "auto"
+
+
+class ExternalConfig(BaseModel):
+    """External agents configuration."""
+
+    agents: Dict[str, ExternalAgentConfig] = Field(
+        default_factory=dict,
+    )
 
 
 class MCPClientConfig(BaseModel):

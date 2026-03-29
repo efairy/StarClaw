@@ -49,6 +49,8 @@ from .tools import (
     view_image,
     write_file,
     create_memory_search_tool,
+    create_call_external_agent_tool,
+    create_list_external_agents_tool,
 )
 from .utils import process_file_and_media_blocks_in_message
 from ..constant import (
@@ -167,6 +169,9 @@ class StarClawAgent(ToolGuardMixin, ReActAgent):
             memory_manager,
             namesake_strategy,
         )
+
+        # Register external agent tools if configured
+        self._register_external_agent_tools(namesake_strategy)
 
         # Setup command handler
         self.command_handler = CommandHandler(
@@ -408,6 +413,37 @@ class StarClawAgent(ToolGuardMixin, ReActAgent):
                 namesake_strategy=namesake_strategy,
             )
             logger.debug("Registered memory_search tool")
+
+    def _register_external_agent_tools(
+        self,
+        namesake_strategy: NamesakeStrategy,
+    ) -> None:
+        """Register external agent tools if external agents are configured."""
+        ext_config = getattr(self._agent_config, "external", None)
+        if ext_config is None or not ext_config.agents:
+            return
+
+        # Check if any external agent is enabled
+        has_enabled = any(a.enabled for a in ext_config.agents.values())
+        if not has_enabled:
+            return
+
+        try:
+            agent_id = self._agent_config.id
+            self.toolkit.register_tool_function(
+                create_call_external_agent_tool(agent_id),
+                namesake_strategy=namesake_strategy,
+            )
+            self.toolkit.register_tool_function(
+                create_list_external_agents_tool(agent_id),
+                namesake_strategy=namesake_strategy,
+            )
+            logger.debug(
+                "Registered external agent tools "
+                "(call_external_agent, list_external_agents)",
+            )
+        except Exception as e:
+            logger.warning(f"Failed to register external agent tools: {e}")
 
     def _register_hooks(self) -> None:
         """Register pre-reasoning and pre-acting hooks."""

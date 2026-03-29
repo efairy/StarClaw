@@ -1,0 +1,227 @@
+.externalPage {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.pageHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: relative;
+  padding: 20px;
+  border-bottom: 1px solid #eae9e7;
+  margin-bottom: 0;
+}
+
+.agentsContainer {
+  overflow: auto;
+}
+
+.breadcrumbHeader {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 16px;
+  flex: 1;
+}
+
+.breadcrumbParent {
+  color: #999;
+  font-weight: 400;
+}
+
+.breadcrumbSeparator {
+  color: #ccc;
+  margin: 0 4px;
+}
+
+.breadcrumbCurrent {
+  color: #333;
+  font-weight: 600;
+  font-size: 20px;
+}
+
+.headerAction {
+  flex-shrink: 0;
+}
+
+.loading {
+  text-align: center;
+  padding: 60px;
+  color: #999;
+}
+
+.agentsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 16px;
+  padding: 16px;
+}
+
+.agentCard {
+  height: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  border-radius: var(--border-radius, 8px);
+  background: var(--color-bg-base, #ffffff);
+  border: 1px solid var(--color-border-secondary, #eae8e7);
+  box-sizing: border-box;
+  transition: all 0.2s ease-in-out;
+  cursor: pointer;
+
+  :global(.starclaw-card-body) {
+    padding: 0 !important;
+  }
+
+  &.enabledCard {
+    .statusDot {
+      background-color: rgba(20, 184, 166, 1);
+    }
+
+    .statusText {
+      color: rgba(20, 184, 166, 1);
+    }
+  }
+
+  &.hoverCard {
+    border-color: var(--color-border, #d9d9d9);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+  }
+
+  &.normalCard {
+    border-color: var(--color-border-secondary, #eae8e7);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+  }
+}
+
+.cardHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.agentName {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 500;
+  color: rgba(20, 20, 19, 0.88);
+  font-family: Inter;
+  line-height: 24px;
+}
+
+.statusContainer {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 11px;
+  flex-shrink: 0;
+}
+
+.statusDot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  background-color: #d9d9d9;
+}
+
+.statusText {
+  font-family: Lato;
+  font-size: 12px;
+  font-weight: normal;
+  line-height: 19px;
+  letter-spacing: normal;
+  color: rgba(20, 20, 19, 0.45);
+}
+
+.agentDescription {
+  margin: 6px 0 16px 0;
+  color: #666;
+  font-size: 13px;
+  line-height: 1.6;
+  min-height: 40px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+
+.cardFooter {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 12px;
+  padding-top: 12px;
+  margin-top: auto;
+  border-top: 1px solid #f0f0f0;
+}
+
+.deleteBtn {
+  margin-right: auto;
+  opacity: 0.6;
+
+  &:hover {
+    opacity: 1;
+  }
+}
+
+/* ─── Dark mode ─────────────────────────────────────────────────────────────── */
+:global(.dark-mode) {
+  .pageHeader {
+    border-bottom-color: rgba(255, 255, 255, 0.08);
+  }
+
+  .breadcrumbParent {
+    color: rgba(255, 255, 255, 0.35);
+  }
+
+  .breadcrumbSeparator {
+    color: rgba(255, 255, 255, 0.2);
+  }
+
+  .breadcrumbCurrent {
+    color: rgba(255, 255, 255, 0.85);
+  }
+
+  .loading {
+    color: rgba(255, 255, 255, 0.35);
+  }
+
+  .agentCard {
+    background: #2d2d2d;
+
+    &.normalCard {
+      border-color: rgba(255, 255, 255, 0.08) !important;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3) !important;
+    }
+
+    &.hoverCard {
+      border-color: rgba(255, 255, 255, 0.2) !important;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4) !important;
+    }
+  }
+
+  .agentName {
+    color: rgba(255, 255, 255, 0.85);
+  }
+
+  .statusDot {
+    background-color: rgba(255, 255, 255, 0.2);
+  }
+
+  .statusText {
+    color: rgba(255, 255, 255, 0.45);
+  }
+
+  .agentDescription {
+    color: rgba(255, 255, 255, 0.65);
+  }
+
+  .cardFooter {
+    border-top-color: rgba(255, 255, 255, 0.08);
+  }
+}
