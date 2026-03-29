@@ -104,8 +104,8 @@
 
     :global {
       /* Center icon in collapsed menu items */
-      .copaw-menu-item,
-      .copaw-menu-submenu .copaw-menu-item {
+      .starclaw-menu-item,
+      .starclaw-menu-submenu .starclaw-menu-item {
         padding-left: 0 !important;
         padding-right: 0 !important;
         display: flex !important;
@@ -114,27 +114,27 @@
       }
 
       /* Hide label text in collapsed mode */
-      .copaw-menu-title-content,
-      .copaw-menu-item > span:not([role]),
-      .copaw-menu-item-only-child > span {
+      .starclaw-menu-title-content,
+      .starclaw-menu-item > span:not([role]),
+      .starclaw-menu-item-only-child > span {
         display: none !important;
       }
 
       /* Hide group labels */
-      .copaw-menu-submenu-title {
+      .starclaw-menu-submenu-title {
         display: none !important;
       }
     }
   }
 
   :global {
-    .copaw-menu {
+    .starclaw-menu {
       background: #f9f8f4 !important;
       border-inline-end: 0 !important;
     }
 
     /* Group title (一级菜单分组) */
-    .copaw-menu-submenu-title {
+    .starclaw-menu-submenu-title {
       font-family: "PingFang SC", sans-serif !important;
       font-size: 12px !important;
       font-weight: 500 !important;
@@ -144,38 +144,38 @@
     }
 
     /* Hide submenu arrow */
-    .copaw-menu-submenu-arrow {
+    .starclaw-menu-submenu-arrow {
       display: none !important;
     }
 
     /* Always expand submenus */
-    .copaw-menu-submenu {
-      > .copaw-menu {
+    .starclaw-menu-submenu {
+      > .starclaw-menu {
         display: block !important;
       }
     }
 
     /* Remove submenu indent - align with parent */
-    .copaw-menu-submenu .copaw-menu-item {
+    .starclaw-menu-submenu .starclaw-menu-item {
       padding-left: 24px !important;
     }
 
     /* Selected item */
-    .copaw-menu-item-selected {
+    .starclaw-menu-item-selected {
       background: rgba(43, 18, 0, 0.08) !important;
       color: inherit !important;
       display: flex !important;
       align-items: center !important;
       justify-content: center !important;
 
-      .copaw-menu-title-content {
+      .starclaw-menu-title-content {
         display: flex !important;
         align-items: center !important;
       }
     }
 
     /* Selected submenu item - keep text color unchanged */
-    .copaw-menu-submenu .copaw-menu-item-selected {
+    .starclaw-menu-submenu .starclaw-menu-item-selected {
       color: inherit !important;
     }
   }
@@ -191,30 +191,30 @@
   }
 
   :global {
-    .copaw-menu {
+    .starclaw-menu {
       background: #1a1a1a !important;
       border-inline-end: 0 !important;
     }
 
     /* Group title (sub-menu label) */
-    .copaw-menu-submenu-title {
+    .starclaw-menu-submenu-title {
       color: rgba(255, 255, 255, 0.45) !important;
     }
 
     /* Regular menu item */
-    .copaw-menu-item {
+    .starclaw-menu-item {
       color: rgba(255, 255, 255, 0.75) !important;
     }
 
     /* Hover state */
-    .copaw-menu-item:hover,
-    .copaw-menu-submenu-title:hover {
+    .starclaw-menu-item:hover,
+    .starclaw-menu-submenu-title:hover {
       background: rgba(255, 255, 255, 0.1) !important;
       color: rgba(255, 255, 255, 0.95) !important;
     }
 
     /* Selected item */
-    .copaw-menu-item-selected {
+    .starclaw-menu-item-selected {
       background: rgba(255, 127, 22, 0.5) !important;
       color: #ff7f16 !important;
     }
@@ -362,7 +362,7 @@
 
 // ─── Update Modal ─────────────────────────────────────────────────────────────
 .updateModal {
-  :global(.copaw-modal-content) {
+  :global(.starclaw-modal-content) {
     padding: 0 !important;
     border-radius: 12px !important;
     overflow: visible !important;
@@ -370,20 +370,20 @@
     border: none !important;
   }
 
-  :global(.copaw-modal-body) {
+  :global(.starclaw-modal-body) {
     padding: 0 !important;
   }
 
-  :global(.copaw-modal-footer) {
+  :global(.starclaw-modal-footer) {
     padding: 12px 24px;
     margin-top: 0;
   }
 
-  :global(.copaw-modal-header) {
+  :global(.starclaw-modal-header) {
     display: none !important;
   }
 
-  :global(.copaw-modal-close) {
+  :global(.starclaw-modal-close) {
     display: none !important;
   }
 }
@@ -523,7 +523,7 @@
     color: rgba(255, 255, 255, 0.85);
 
     /* Text buttons (Docs / FAQ / GitHub / Changelog) */
-    :global(.copaw-btn-text),
+    :global(.starclaw-btn-text),
     :global(.ant-btn-text) {
       color: rgba(255, 255, 255, 0.75) !important;
 

@@ -24,7 +24,7 @@ workspace，再由该 workspace 自己决定是否启用。
 
 | Skill 名称                   | 说明                                                                                                                                        | 来源                                                           |
 | ---------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------- |
-| **cron**                     | 定时任务管理。通过 `copaw cron` 或控制台 Cron Jobs 创建、查询、暂停、恢复、删除定时任务，按时间表执行并把结果发到频道。                     | 自建                                                           |
+| **cron**                     | 定时任务管理。通过 `starclaw cron` 或控制台 Cron Jobs 创建、查询、暂停、恢复、删除定时任务，按时间表执行并把结果发到频道。                     | 自建                                                           |
 | **file_reader**              | 读取与摘要文本类文件（如 .txt、.md、.json、.csv、.log、.py 等）。PDF 与 Office 由下方专用 Skill 处理。                                      | 自建                                                           |
 | **dingtalk_channel_connect** | 辅助完成钉钉频道接入流程：引导进入开发者后台、填写必要信息，帮助用户获取 `Client ID` 与 `Client Secret`，并提示用户完成必要的手动配置步骤。 | 自建                                                           |
 | **himalaya**                 | 通过 CLI 管理邮件（IMAP/SMTP）。使用 `himalaya` 列出、阅读、搜索、整理邮件，支持多账户与附件管理。                                          | https://github.com/openclaw/openclaw/tree/main/skills/himalaya |
@@ -56,22 +56,22 @@ workspace 的 Agent 行为。适合不习惯直接改文件的用户。
 
 **Cron** 是内置 Skill，可以从 skill pool 添加到某个 workspace。它提供
 「按时间表执行任务并把结果发到频道」的能力；具体任务的增删改查用 [CLI](./cli)
-的 `copaw cron` 或控制台 **Control → Cron Jobs** 完成，不需要手写 cron 以外的配置。
+的 `starclaw cron` 或控制台 **Control → Cron Jobs** 完成，不需要手写 cron 以外的配置。
 
 常用操作：
 
-- 创建任务：`copaw cron create --type agent --name "xxx" --cron "0 9 * * *" ...`
-- 查看列表：`copaw cron list`
-- 查看状态：`copaw cron state <job_id>`
+- 创建任务：`starclaw cron create --type agent --name "xxx" --cron "0 9 * * *" ...`
+- 查看列表：`starclaw cron list`
+- 查看状态：`starclaw cron state <job_id>`
 
 ---
 
 ## 技能池（Skill Pool）
 
-**技能池** 是一个本地共享仓库，存放在 `$COPAW_WORKING_DIR/skill_pool/`（默认 `~/.copaw/skill_pool/`）。它保存内置技能和你选择跨 workspace 共享的自定义技能。
+**技能池** 是一个本地共享仓库，存放在 `$STARCLAW_WORKING_DIR/skill_pool/`（默认 `~/.starclaw/skill_pool/`）。它保存内置技能和你选择跨 workspace 共享的自定义技能。
 
 ```
-~/.copaw/
+~/.starclaw/
   skill_pool/                # 共享池
     skill.json               # 池清单（源数据）
     pdf/
@@ -139,7 +139,7 @@ customized skill，先手动删除该 builtin 再创建。
 
 ### 导入内置技能
 
-CoPaw 升级后，`src/` 下打包的内置技能可能比本地池中的版本更新，或者你也可能主动从
+StarClaw 升级后，`src/` 下打包的内置技能可能比本地池中的版本更新，或者你也可能主动从
 池里删除了一些 builtin。
 
 如需把源码中的 builtin 导入到技能池：
@@ -234,8 +234,8 @@ Discord 上。
 
 ### 步骤
 
-1. 在 `~/.copaw/workspaces/{agent_id}/skills/` 下新建一个目录，例如 `my_skill`。
-2. 在该目录下新建 `SKILL.md`。文件**必须**以 YAML front matter 开头，包含 `name` 和 `description` 两个必填字段。front matter 之后用 Markdown 编写给 Agent 的能力说明。若 Skill 依赖外部二进制或环境变量，可在 `metadata.requires` 中声明；CoPaw 会将其透出为 `require_bins` 和 `require_envs` 元数据，但不会因此自动禁用 Skill。
+1. 在 `~/.starclaw/workspaces/{agent_id}/skills/` 下新建一个目录，例如 `my_skill`。
+2. 在该目录下新建 `SKILL.md`。文件**必须**以 YAML front matter 开头，包含 `name` 和 `description` 两个必填字段。front matter 之后用 Markdown 编写给 Agent 的能力说明。若 Skill 依赖外部二进制或环境变量，可在 `metadata.requires` 中声明；StarClaw 会将其透出为 `require_bins` 和 `require_envs` 元数据，但不会因此自动禁用 Skill。
 
 ### SKILL.md 示例
 
@@ -264,7 +264,7 @@ metadata:
 ## Skill Config 运行时注入
 
 每个 Skill 可以在 manifest 条目中存储一个 `config` 对象。这个 config 不只是
-展示字段——当某个 Skill 在当前 workspace 和频道下生效时，CoPaw 会在该次 Agent
+展示字段——当某个 Skill 在当前 workspace 和频道下生效时，StarClaw 会在该次 Agent
 运行期间把它注入到运行时环境中，Skill 结束后再回滚。
 
 可以在控制台 **Agent → Skills** 中点击技能的配置图标设置 config，也可以通过
@@ -276,7 +276,7 @@ config 中与 SKILL.md `metadata.requires.env` 声明匹配的 key 会被注入�
 未在 `requires.env` 中声明的 key 不会注入（但仍可通过完整 JSON 变量读取）。
 如果 config 缺少某个必需 key，会记录警告日志。
 
-完整 config 始终以 `COPAW_SKILL_CONFIG_<SKILL_NAME>`（JSON 字符串）注入，
+完整 config 始终以 `STARCLAW_SKILL_CONFIG_<SKILL_NAME>`（JSON 字符串）注入，
 不受 `requires.env` 影响。
 
 宿主进程中已存在的同名环境变量不会被覆盖。
@@ -310,7 +310,7 @@ config 为：
 - `MY_API_KEY` ← 来自 config，匹配 `requires.env`
 - `BASE_URL` ← 来自 config，匹配 `requires.env`
 - `timeout` ← 不在 `requires.env` 中，仅可通过完整 JSON 读取
-- `COPAW_SKILL_CONFIG_MY_SKILL` ← 完整 JSON 配置（始终注入）
+- `STARCLAW_SKILL_CONFIG_MY_SKILL` ← 完整 JSON 配置（始终注入）
 
 Python 示例：
 
@@ -320,7 +320,7 @@ import os
 
 api_key = os.environ.get("MY_API_KEY", "")
 base_url = os.environ.get("BASE_URL", "")
-cfg = json.loads(os.environ.get("COPAW_SKILL_CONFIG_MY_SKILL", "{}"))
+cfg = json.loads(os.environ.get("STARCLAW_SKILL_CONFIG_MY_SKILL", "{}"))
 timeout = cfg.get("timeout", 30)
 ```
 
@@ -335,7 +335,7 @@ Skill 运行时，生效配置按以下优先级（高优先覆盖低优先）�
 2. **工作区配置** — 工作区 manifest 条目（`skill.json`）中的 `config` 对象，即控制台中针对每个 Agent 编辑的配置。
 3. **池配置** — 从池下载技能到工作区时，池的 `config` 会作为初始工作区配置复制过来，之后工作区的编辑优先。
 
-对于 `requires` 元数据，解析器按顺序检查：`metadata.openclaw.requires` → `metadata.copaw.requires` → `metadata.requires`，取第一个找到的。
+对于 `requires` 元数据，解析器按顺序检查：`metadata.openclaw.requires` → `metadata.starclaw.requires` → `metadata.requires`，取第一个找到的。
 
 ---
 
@@ -343,7 +343,7 @@ Skill 运行时，生效配置按以下优先级（高优先覆盖低优先）�
 
 ### `skill.json` 结构
 
-每个智能体工作区的 `skill.json`（如 `~/.copaw/workspaces/default/skill.json`）控制该智能体启用哪些技能、在哪些频道生效、以及技能的配置参数。
+每个智能体工作区的 `skill.json`（如 `~/.starclaw/workspaces/default/skill.json`）控制该智能体启用哪些技能、在哪些频道生效、以及技能的配置参数。
 
 **配置示例：**
 

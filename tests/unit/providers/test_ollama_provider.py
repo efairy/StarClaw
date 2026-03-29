@@ -3,9 +3,9 @@ from __future__ import annotations
 
 from types import SimpleNamespace
 
-import copaw.providers.ollama_provider as ollama_provider_module
-from copaw.providers.ollama_provider import OllamaProvider
-from copaw.providers.provider import ModelInfo
+import starclaw.providers.ollama_provider as ollama_provider_module
+from starclaw.providers.ollama_provider import OllamaProvider
+from starclaw.providers.provider import ModelInfo
 
 
 def _make_provider() -> OllamaProvider:

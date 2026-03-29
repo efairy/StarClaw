@@ -40,7 +40,7 @@ export const useAgentStore = create<AgentStore>()(
         })),
     }),
     {
-      name: "copaw-agent-storage",
+      name: "starclaw-agent-storage",
       storage: {
         getItem: (name) => {
           try {

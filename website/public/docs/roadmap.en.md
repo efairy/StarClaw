@@ -12,7 +12,7 @@
 |                                       | Async tasks                                                                                                                                      | Planned              |
 |                                       | Inter-agent contention resolution                                                                                                                | Planned              |
 | **Multimodal**                        | Voice/video calls and real-time interaction                                                                                                      | In Progress          |
-| **Small + Large Model Collaboration** | Train/fine-tune local small LLMs for CoPaw workflows                                                                                             | In Progress          |
+| **Small + Large Model Collaboration** | Train/fine-tune local small LLMs for StarClaw workflows                                                                                             | In Progress          |
 |                                       | Multi-model routing; different models for different tasks                                                                                        | In Progress          |
 | **Memory System**                     | Experience distillation & skill extraction                                                                                                       | In Progress          |
 |                                       | Memory mechanism switching                                                                                                                       | Planned              |
@@ -28,9 +28,9 @@ _Status:_ _In Progress_ — actively being worked on; _Planned_ — queued or un
 
 ## Get involved
 
-We are building CoPaw in the open and welcome contributions of all kinds! Check the table above (especially items marked **Seeking Contributors**) to find areas that interest you, and read [CONTRIBUTING](https://github.com/agentscope-ai/CoPaw/blob/main/CONTRIBUTING.md) to get started. We particularly welcome:
+We are building StarClaw in the open and welcome contributions of all kinds! Check the table above (especially items marked **Seeking Contributors**) to find areas that interest you, and read [CONTRIBUTING](https://github.com/efairy/StarClaw/blob/main/CONTRIBUTING.md) to get started. We particularly welcome:
 
 - **Horizontal expansion** — new channels, model providers, skills, MCPs.
 - **Existing feature extension** — display and UX improvements, download hints, Windows path compatibility, and the like.
 
-Join the conversation on [GitHub Discussions](https://github.com/agentscope-ai/CoPaw/discussions) to suggest or pick up work.
+Join the conversation on [GitHub Discussions](https://github.com/efairy/StarClaw/discussions) to suggest or pick up work.

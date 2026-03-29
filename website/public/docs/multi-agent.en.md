@@ -1,6 +1,6 @@
 # Multi-Agent
 
-CoPaw supports **multi-agent**, allowing you to run multiple independent AI agents in a single CoPaw instance.
+StarClaw supports **multi-agent**, allowing you to run multiple independent AI agents in a single StarClaw instance.
 
 > This feature was introduced in **v0.1.0**.
 
@@ -15,7 +15,7 @@ CoPaw supports **multi-agent**, allowing you to run multiple independent AI agen
 
 ### What is Multi-Agent?
 
-Simply put, **multi-agent** lets you run multiple "personas" in one CoPaw, where each persona:
+Simply put, **multi-agent** lets you run multiple "personas" in one StarClaw, where each persona:
 
 - Has its own **personality and specialization** (configured via different persona files)
 - Remembers **its own conversations** (no cross-talk)
@@ -40,7 +40,7 @@ Each agent focuses on its domain without interference.
 
 ### Use Case 2: Platform Separation
 
-You might use CoPaw across multiple platforms:
+You might use StarClaw across multiple platforms:
 
 - **DingTalk** - work-related conversations
 - **Discord** - community discussions
@@ -65,7 +65,7 @@ You might need:
 
 #### 1. View and Switch Agents
 
-After starting CoPaw, you'll see the **Agent Selector** in the **top-right corner** of the console:
+After starting StarClaw, you'll see the **Agent Selector** in the **top-right corner** of the console:
 
 ```
 ┌───────────────────────────────────┐
@@ -203,7 +203,7 @@ Yes. If you configure different agents for DingTalk and Discord, they can respon
 
 Click the delete button in the "Settings → Agent Management" page in console.
 
-**Note**: After deletion, the workspace directory is retained (to prevent accidental data loss). To completely remove it, manually delete the `~/.copaw/workspaces/{agent_id}` directory.
+**Note**: After deletion, the workspace directory is retained (to prevent accidental data loss). To completely remove it, manually delete the `~/.starclaw/workspaces/{agent_id}` directory.
 
 ### Q: Can the default agent be deleted?
 
@@ -228,7 +228,7 @@ Not recommended. The `default` agent is the system's default fallback; deleting 
 
 ## Upgrading from Single-Agent
 
-If you previously used CoPaw **v0.0.x**, upgrading to **v0.1.0** will **automatically migrate**:
+If you previously used StarClaw **v0.0.x**, upgrading to **v0.1.0** will **automatically migrate**:
 
 1. **Automatic Migration on First Start**
 
@@ -237,14 +237,14 @@ If you previously used CoPaw **v0.0.x**, upgrading to **v0.1.0** will **automati
 
 2. **Verify Migration**
 
-   - After starting CoPaw, check the agent list in console
+   - After starting StarClaw, check the agent list in console
    - You should see an agent named "Default Agent"
    - Your old conversations and configs should still be there
 
 3. **Backup Recommendation**
    Back up your working directory before upgrading:
    ```bash
-   cp -r ~/.copaw ~/.copaw.backup
+   cp -r ~/.starclaw ~/.starclaw.backup
    ```
 
 ---
@@ -276,10 +276,10 @@ Agents can communicate and collaborate with each other to handle complex tasks t
 
 ```bash
 # Enable for default agent
-copaw skills config
+starclaw skills config
 
 # Enable for specific agent
-copaw skills config --agent-id abc123
+starclaw skills config --agent-id abc123
 
 # In the interactive interface:
 # - Use ↑/↓ keys to find "multi_agent_collaboration"
@@ -427,7 +427,7 @@ For testing
 The system **automatically generates** a `PROFILE.md` file based on the agent's configuration (including name, description, skills, persona files, etc.), stored in the workspace directory:
 
 ```
-~/.copaw/workspaces/{agent_id}/PROFILE.md
+~/.starclaw/workspaces/{agent_id}/PROFILE.md
 ```
 
 You can view the auto-generated PROFILE.md in the **Agent → Workspace** page.
@@ -437,13 +437,13 @@ You can view the auto-generated PROFILE.md in the **Agent → Workspace** page.
 Use CLI to view all agents' information:
 
 ```bash
-copaw agents list
+starclaw agents list
 
 # Example output:
 # Agent ID: code_reviewer
 # Name: Code Review Assistant
 # Description: Specializes in Python/JavaScript code review, refactoring, and performance optimization
-# Workspace: ~/.copaw/workspaces/code_reviewer
+# Workspace: ~/.starclaw/workspaces/code_reviewer
 # Profile: [Auto-generated detailed capability description]
 ```
 
@@ -471,7 +471,7 @@ When agents have the collaboration skill enabled, they automatically use these C
 #### Query Available Agents
 
 ```bash
-copaw agents list
+starclaw agents list
 ```
 
 This command lists all configured agents, including:
@@ -488,13 +488,13 @@ This command lists all configured agents, including:
 Agent ID: code_reviewer
 Name: Code Review Assistant
 Description: Specializes in Python/JavaScript code review, refactoring, and performance optimization
-Workspace: ~/.copaw/workspaces/code_reviewer
+Workspace: ~/.starclaw/workspaces/code_reviewer
 Profile: [Auto-generated detailed capability description based on config and persona files]
 
 Agent ID: writer_bot
 Name: Writing Assistant
 Description: Handles document writing, content polishing, and technical writing; proficient in Chinese and English
-Workspace: ~/.copaw/workspaces/writer_bot
+Workspace: ~/.starclaw/workspaces/writer_bot
 Profile: [Auto-generated detailed capability description]
 ```
 
@@ -504,27 +504,27 @@ Agents reference both **Description** and **Profile** when deciding which agent 
 
 ```bash
 # Initiate new conversation (real-time mode, for quick queries)
-copaw agents chat \
+starclaw agents chat \
   --from-agent <current_agent> \
   --to-agent <target_agent> \
   --text "Request content"
 
 # Multi-turn conversation (maintain context)
-copaw agents chat \
+starclaw agents chat \
   --from-agent <current_agent> \
   --to-agent <target_agent> \
   --session-id "<session_id>" \
   --text "Follow-up request"
 
 # Complex task (background mode, for data analysis, report generation, etc.)
-copaw agents chat --background \
+starclaw agents chat --background \
   --from-agent <current_agent> \
   --to-agent <target_agent> \
   --text "Complex task request"
 # Returns [TASK_ID: xxx] [SESSION: xxx]
 
 # Check background task status (--to-agent is optional when querying)
-copaw agents chat --background \
+starclaw agents chat --background \
   --task-id <task_id>
 # Status flow: submitted → pending → running → finished
 # When finished, result shows: completed (✅) or failed (❌)
@@ -557,12 +557,12 @@ All multi-agent-aware CLI commands accept the `--agent-id` parameter (defaults t
 
 ```bash
 # View specific agent's configuration
-copaw channels list --agent-id abc123
-copaw cron list --agent-id abc123
-copaw skills list --agent-id abc123
+starclaw channels list --agent-id abc123
+starclaw cron list --agent-id abc123
+starclaw skills list --agent-id abc123
 
 # Create cron job for specific agent
-copaw cron create \
+starclaw cron create \
   --agent-id abc123 \
   --type agent \
   --name "Check Todos" \
@@ -575,18 +575,18 @@ copaw cron create \
 
 **Commands Supporting `--agent-id`**:
 
-- `copaw channels` - channel management
-- `copaw cron` - cron jobs
-- `copaw daemon` - runtime status
-- `copaw chats` - chat management
-- `copaw skills` - skill management
+- `starclaw channels` - channel management
+- `starclaw cron` - cron jobs
+- `starclaw daemon` - runtime status
+- `starclaw chats` - chat management
+- `starclaw skills` - skill management
 
 **Commands NOT Supporting `--agent-id`** (global operations):
 
-- `copaw init` - initialization
-- `copaw providers` - model providers
-- `copaw models` - model configuration
-- `copaw env` - environment variables
+- `starclaw init` - initialization
+- `starclaw providers` - model providers
+- `starclaw models` - model configuration
+- `starclaw env` - environment variables
 
 ### REST API
 
@@ -633,7 +633,7 @@ If you need to directly edit configuration files:
 #### Old Structure (v0.0.x)
 
 ```
-~/.copaw/
+~/.starclaw/
 ├── config.json          # All config
 ├── chats.json
 ├── jobs.json
@@ -644,7 +644,7 @@ If you need to directly edit configuration files:
 #### New Structure (v0.1.0+)
 
 ```
-~/.copaw/
+~/.starclaw/
 ├── config.json          # Global config (providers, agents.profiles)
 └── workspaces/
     ├── default/         # Default agent workspace
@@ -687,10 +687,10 @@ Back up important agent workspaces regularly:
 
 ```bash
 # Backup specific agent
-cp -r ~/.copaw/workspaces/abc123 ~/backups/agent-abc123-$(date +%Y%m%d)
+cp -r ~/.starclaw/workspaces/abc123 ~/backups/agent-abc123-$(date +%Y%m%d)
 
 # Backup all agents
-cp -r ~/.copaw/workspaces ~/backups/workspaces-$(date +%Y%m%d)
+cp -r ~/.starclaw/workspaces ~/backups/workspaces-$(date +%Y%m%d)
 ```
 
 ---

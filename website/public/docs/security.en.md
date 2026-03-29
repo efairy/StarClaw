@@ -1,10 +1,10 @@
 # Security
 
-CoPaw includes built-in security features to protect your agent from malicious inputs and unsafe skills. These are configured in the Console under **Settings → Security**, or via `config.json`.
+StarClaw includes built-in security features to protect your agent from malicious inputs and unsafe skills. These are configured in the Console under **Settings → Security**, or via `config.json`.
 
 ## Overview
 
-CoPaw's security system consists of three core security layers:
+StarClaw's security system consists of three core security layers:
 
 ```
 Security Architecture:
@@ -70,7 +70,7 @@ In `config.json`:
 
 | Field            | Description                                                                                                                                           |
 | ---------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `enabled`        | Enable or disable Tool Guard entirely. Can also be set via the `COPAW_TOOL_GUARD_ENABLED` environment variable (takes precedence).                    |
+| `enabled`        | Enable or disable Tool Guard entirely. Can also be set via the `STARCLAW_TOOL_GUARD_ENABLED` environment variable (takes precedence).                    |
 | `guarded_tools`  | Specify guard scope:<br>• `null` (default) — guard all built-in tools<br>• `[]` — guard nothing<br>• `["tool_a", "tool_b"]` — guard only listed tools |
 | `denied_tools`   | Tools that are always blocked regardless of parameters.                                                                                               |
 | `custom_rules`   | User-defined regex rules (see format below).                                                                                                          |
@@ -231,7 +231,7 @@ File Guard operates as the "File Path Guardian" within the Tool Guard engine, wo
 4. **Recursive directory protection** — Paths ending with `/` are treated as directories; all files and subdirectories within are recursively blocked
 5. **Blocking mechanism** — When a match is found, the tool call is blocked with a HIGH-severity finding
 
-**Default protection**: The `{WORKING_DIR}.secret/` directory (which stores API keys, authentication credentials, and provider configurations) is included in the sensitive-file list by default. By default, `WORKING_DIR` is `~/.copaw/`, making the full path `~/.copaw.secret/`.
+**Default protection**: The `{WORKING_DIR}.secret/` directory (which stores API keys, authentication credentials, and provider configurations) is included in the sensitive-file list by default. By default, `WORKING_DIR` is `~/.starclaw/`, making the full path `~/.starclaw.secret/`.
 
 ### Configuration
 
@@ -242,7 +242,7 @@ In `config.json`:
   "security": {
     "file_guard": {
       "enabled": true,
-      "sensitive_files": ["~/.ssh/", "/etc/passwd", "~/.copaw.secret/"]
+      "sensitive_files": ["~/.ssh/", "/etc/passwd", "~/.starclaw.secret/"]
     }
   }
 }
@@ -311,7 +311,7 @@ The **Skill Scanner** automatically scans skills for security threats before the
 | **Warn**  | Scan and record findings, but allow the skill to proceed. Shows warning notification and logs to Scan Alerts. (default) |
 | **Off**   | Disable scanning entirely; all skills pass through directly.                                                            |
 
-**Configuration priority**: Environment variable `COPAW_SKILL_SCAN_MODE` > Console settings > `config.json`
+**Configuration priority**: Environment variable `STARCLAW_SKILL_SCAN_MODE` > Console settings > `config.json`
 
 Valid values: `block`, `warn`, `off`
 
@@ -386,11 +386,11 @@ In the Console under **Settings → Security → Skill Scanner** tab, you can:
 
 For scenarios requiring deep customization, the scanner supports programmatic configuration:
 
-The scanner uses YAML rule files in `src/copaw/security/skill_scanner/rules/signatures/`. You can customize the scan policy via a YAML policy file:
+The scanner uses YAML rule files in `src/starclaw/security/skill_scanner/rules/signatures/`. You can customize the scan policy via a YAML policy file:
 
 ```python
-from copaw.security.skill_scanner import SkillScanner
-from copaw.security.skill_scanner.scan_policy import ScanPolicy
+from starclaw.security.skill_scanner import SkillScanner
+from starclaw.security.skill_scanner.scan_policy import ScanPolicy
 
 policy = ScanPolicy.from_yaml("my_org_policy.yaml")
 scanner = SkillScanner(policy=policy)
@@ -506,7 +506,7 @@ Here's a complete `config.json` with all security features configured:
       "enabled": true,
       "sensitive_files": [
         "~/.ssh/",
-        "~/.copaw.secret/",
+        "~/.starclaw.secret/",
         "/etc/passwd",
         "/etc/shadow",
         ".env",
@@ -532,13 +532,13 @@ Here's a complete `config.json` with all security features configured:
 
 ## Web Authentication
 
-CoPaw supports optional web login authentication to protect the Console from unauthorized access. Authentication is **disabled by default** and must be explicitly enabled via the `COPAW_AUTH_ENABLED` environment variable.
+StarClaw supports optional web login authentication to protect the Console from unauthorized access. Authentication is **disabled by default** and must be explicitly enabled via the `STARCLAW_AUTH_ENABLED` environment variable.
 
 <!-- TODO: Add screenshot of login page and registration page -->
 
 ### How it works
 
-1. **Enable authentication** — Set `COPAW_AUTH_ENABLED=true` and start CoPaw
+1. **Enable authentication** — Set `STARCLAW_AUTH_ENABLED=true` and start StarClaw
 2. **Registration flow**:
    - On first visit, the Console shows a **registration page**
    - Create the single admin account (username + password)
@@ -548,10 +548,10 @@ CoPaw supports optional web login authentication to protect the Console from una
    - After entering credentials, a signed token is generated (valid for 7 days)
    - Token is stored in browser localStorage and automatically attached to all API requests
 4. **Auto-registration** (optional):
-   - Set `COPAW_AUTH_USERNAME` and `COPAW_AUTH_PASSWORD` environment variables
-   - CoPaw automatically creates the admin account on startup, skipping web registration
+   - Set `STARCLAW_AUTH_USERNAME` and `STARCLAW_AUTH_PASSWORD` environment variables
+   - StarClaw automatically creates the admin account on startup, skipping web registration
    - Useful for Docker, Kubernetes, server management panels, and other automated deployments
-5. **Localhost bypass** — Requests from localhost (`127.0.0.1` / `::1`) automatically skip authentication; CLI commands (`copaw app`, `copaw chat`, etc.) work without a token
+5. **Localhost bypass** — Requests from localhost (`127.0.0.1` / `::1`) automatically skip authentication; CLI commands (`starclaw app`, `starclaw chat`, etc.) work without a token
 
 **Security features**:
 
@@ -564,14 +564,14 @@ CoPaw supports optional web login authentication to protect the Console from una
 
 | Variable              | Description                                  | Required |
 | --------------------- | -------------------------------------------- | -------- |
-| `COPAW_AUTH_ENABLED`  | Set to `true` to enable authentication       | **Yes**  |
-| `COPAW_AUTH_USERNAME` | Pre-set admin username for auto-registration | Optional |
-| `COPAW_AUTH_PASSWORD` | Pre-set admin password for auto-registration | Optional |
+| `STARCLAW_AUTH_ENABLED`  | Set to `true` to enable authentication       | **Yes**  |
+| `STARCLAW_AUTH_USERNAME` | Pre-set admin username for auto-registration | Optional |
+| `STARCLAW_AUTH_PASSWORD` | Pre-set admin password for auto-registration | Optional |
 
 **Configuration notes**:
 
-- `COPAW_AUTH_ENABLED=true` is the only required variable to enable authentication
-- `COPAW_AUTH_USERNAME` and `COPAW_AUTH_PASSWORD` are used together:
+- `STARCLAW_AUTH_ENABLED=true` is the only required variable to enable authentication
+- `STARCLAW_AUTH_USERNAME` and `STARCLAW_AUTH_PASSWORD` are used together:
   - Both set → Auto-creates admin account on startup (for automated deployments)
   - Not set or only one set → Register via web UI on first visit (interactive deployments)
 - If a user is already registered, auto-registration environment variables are ignored
@@ -586,14 +586,14 @@ Set environment variables before starting:
 
 ```bash
 # Basic enable (web registration)
-export COPAW_AUTH_ENABLED=true
-copaw app
+export STARCLAW_AUTH_ENABLED=true
+starclaw app
 
 # Or: Auto-registration mode
-export COPAW_AUTH_ENABLED=true
-export COPAW_AUTH_USERNAME=admin
-export COPAW_AUTH_PASSWORD=mypassword
-copaw app
+export STARCLAW_AUTH_ENABLED=true
+export STARCLAW_AUTH_USERNAME=admin
+export STARCLAW_AUTH_PASSWORD=mypassword
+starclaw app
 ```
 
 To make it permanent, add the `export` lines to your `~/.bashrc`, `~/.zshrc`, or equivalent.
@@ -601,21 +601,21 @@ To make it permanent, add the `export` lines to your `~/.bashrc`, `~/.zshrc`, or
 **Windows (CMD):**
 
 ```cmd
-set COPAW_AUTH_ENABLED=true
+set STARCLAW_AUTH_ENABLED=true
 rem Optional: auto-registration
-rem set COPAW_AUTH_USERNAME=admin
-rem set COPAW_AUTH_PASSWORD=mypassword
-copaw app
+rem set STARCLAW_AUTH_USERNAME=admin
+rem set STARCLAW_AUTH_PASSWORD=mypassword
+starclaw app
 ```
 
 **Windows (PowerShell):**
 
 ```powershell
-$env:COPAW_AUTH_ENABLED = "true"
+$env:STARCLAW_AUTH_ENABLED = "true"
 # Optional: auto-registration
-# $env:COPAW_AUTH_USERNAME = "admin"
-# $env:COPAW_AUTH_PASSWORD = "mypassword"
-copaw app
+# $env:STARCLAW_AUTH_USERNAME = "admin"
+# $env:STARCLAW_AUTH_PASSWORD = "mypassword"
+starclaw app
 ```
 
 #### Docker
@@ -623,32 +623,32 @@ copaw app
 Pass environment variables with `-e` (recommended with auto-registration):
 
 ```bash
-docker run -e COPAW_AUTH_ENABLED=true \
-  -e COPAW_AUTH_USERNAME=admin \
-  -e COPAW_AUTH_PASSWORD=mypassword \
+docker run -e STARCLAW_AUTH_ENABLED=true \
+  -e STARCLAW_AUTH_USERNAME=admin \
+  -e STARCLAW_AUTH_PASSWORD=mypassword \
   -p 127.0.0.1:8088:8088 \
-  -v copaw-data:/app/working \
-  -v copaw-secrets:/app/working.secret \
-  agentscope/copaw:latest
+  -v starclaw-data:/app/working \
+  -v starclaw-secrets:/app/working.secret \
+  agentscope/starclaw:latest
 ```
 
-> **Tip**: To skip auto-registration, remove `COPAW_AUTH_USERNAME` and `COPAW_AUTH_PASSWORD` and register via browser on first visit.
+> **Tip**: To skip auto-registration, remove `STARCLAW_AUTH_USERNAME` and `STARCLAW_AUTH_PASSWORD` and register via browser on first visit.
 
 #### docker-compose.yml
 
 ```yaml
 services:
-  copaw:
-    image: agentscope/copaw:latest
+  starclaw:
+    image: agentscope/starclaw:latest
     ports:
       - "127.0.0.1:8088:8088"
     environment:
-      - COPAW_AUTH_ENABLED=true
-      - COPAW_AUTH_USERNAME=admin
-      - COPAW_AUTH_PASSWORD=mypassword
+      - STARCLAW_AUTH_ENABLED=true
+      - STARCLAW_AUTH_USERNAME=admin
+      - STARCLAW_AUTH_PASSWORD=mypassword
     volumes:
-      - copaw-data:/app/working
-      - copaw-secrets:/app/working.secret
+      - starclaw-data:/app/working
+      - starclaw-secrets:/app/working.secret
 ```
 
 #### Environment file (.env)
@@ -656,24 +656,24 @@ services:
 You can also use a `.env` file:
 
 ```
-COPAW_AUTH_ENABLED=true
-COPAW_AUTH_USERNAME=admin
-COPAW_AUTH_PASSWORD=mypassword
+STARCLAW_AUTH_ENABLED=true
+STARCLAW_AUTH_USERNAME=admin
+STARCLAW_AUTH_PASSWORD=mypassword
 ```
 
-Then pass it to Docker with `--env-file .env`, or source it in your shell before running `copaw app`.
+Then pass it to Docker with `--env-file .env`, or source it in your shell before running `starclaw app`.
 
 ### Disable authentication
 
-Remove or unset the environment variable and restart CoPaw:
+Remove or unset the environment variable and restart StarClaw:
 
 ```bash
 # Linux / macOS
-unset COPAW_AUTH_ENABLED
-copaw app
+unset STARCLAW_AUTH_ENABLED
+starclaw app
 
 # Docker — simply remove the -e flag. The example below includes volumes for persistence.
-docker run -p 127.0.0.1:8088:8088 -v copaw-data:/app/working -v copaw-secrets:/app/working.secret agentscope/copaw:latest
+docker run -p 127.0.0.1:8088:8088 -v starclaw-data:/app/working -v starclaw-secrets:/app/working.secret agentscope/starclaw:latest
 ```
 
 ### Password reset
@@ -681,7 +681,7 @@ docker run -p 127.0.0.1:8088:8088 -v copaw-data:/app/working -v copaw-secrets:/a
 If you forget your password, use the CLI to reset:
 
 ```bash
-copaw auth reset-password
+starclaw auth reset-password
 ```
 
 This command will:
@@ -693,7 +693,7 @@ This command will:
 **Docker deployments**:
 
 ```bash
-docker exec -it <container_name> copaw auth reset-password
+docker exec -it <container_name> starclaw auth reset-password
 ```
 
 **Alternative approach**:
@@ -702,9 +702,9 @@ To completely reset the authentication system:
 
 ```bash
 # Delete the auth file
-rm ~/.copaw.secret/auth.json  # or $WORKING_DIR.secret/auth.json
-# Restart CoPaw; re-register on next visit
-copaw app
+rm ~/.starclaw.secret/auth.json  # or $WORKING_DIR.secret/auth.json
+# Restart StarClaw; re-register on next visit
+starclaw app
 ```
 
 ### Logout

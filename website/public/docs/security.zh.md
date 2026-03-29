@@ -1,10 +1,10 @@
 # 安全
 
-CoPaw 内置了安全功能，保护你的 Agent 免受恶意输入和不安全技能的影响。这些功能在控制台 **设置 → 安全** 中配置，也可以通过 `config.json` 进行设置。
+StarClaw 内置了安全功能，保护你的 Agent 免受恶意输入和不安全技能的影响。这些功能在控制台 **设置 → 安全** 中配置，也可以通过 `config.json` 进行设置。
 
 ## 概述
 
-CoPaw 的安全系统由三个核心安全层组成:
+StarClaw 的安全系统由三个核心安全层组成:
 
 ```
 安全架构:
@@ -68,7 +68,7 @@ CoPaw 的安全系统由三个核心安全层组成:
 
 | 字段             | 说明                                                                                                                         |
 | ---------------- | ---------------------------------------------------------------------------------------------------------------------------- |
-| `enabled`        | 启用或禁用工具守卫。也可通过环境变量 `COPAW_TOOL_GUARD_ENABLED` 设置(优先级高于配置文件)。                                   |
+| `enabled`        | 启用或禁用工具守卫。也可通过环境变量 `STARCLAW_TOOL_GUARD_ENABLED` 设置(优先级高于配置文件)。                                   |
 | `guarded_tools`  | 指定守护范围:<br>• `null`(默认) — 守护所有内置工具<br>• `[]` — 不守护任何工具<br>• `["tool_a", "tool_b"]` — 仅守护列出的工具 |
 | `denied_tools`   | 无条件阻止的工具列表,不论参数如何都不允许调用。                                                                              |
 | `custom_rules`   | 用户自定义正则规则(格式见下文)。                                                                                             |
@@ -229,7 +229,7 @@ CoPaw 的安全系统由三个核心安全层组成:
 4. **目录递归保护** — 以 `/` 结尾的路径视为目录,其下所有文件和子目录都会被递归阻止
 5. **阻止机制** — 发现匹配时,工具调用以 HIGH 级别发现被阻止
 
-**默认保护**: `{WORKING_DIR}.secret/` 目录(存储 API 密钥、认证凭据和提供商配置)默认包含在敏感文件列表中。默认情况下,`WORKING_DIR` 为 `~/.copaw/`,完整路径为 `~/.copaw.secret/`。
+**默认保护**: `{WORKING_DIR}.secret/` 目录(存储 API 密钥、认证凭据和提供商配置)默认包含在敏感文件列表中。默认情况下,`WORKING_DIR` 为 `~/.starclaw/`,完整路径为 `~/.starclaw.secret/`。
 
 ### 配置
 
@@ -240,7 +240,7 @@ CoPaw 的安全系统由三个核心安全层组成:
   "security": {
     "file_guard": {
       "enabled": true,
-      "sensitive_files": ["~/.ssh/", "/etc/passwd", "~/.copaw.secret/"]
+      "sensitive_files": ["~/.ssh/", "/etc/passwd", "~/.starclaw.secret/"]
     }
   }
 }
@@ -309,7 +309,7 @@ CoPaw 的安全系统由三个核心安全层组成:
 | **仅提醒(Warn)** | 扫描并记录发现,但允许技能继续使用。显示警告通知,记录到扫描告警中。(默认) |
 | **关闭(Off)**    | 完全禁用扫描,所有技能直接通过。                                          |
 
-**配置优先级**: 环境变量 `COPAW_SKILL_SCAN_MODE` > 控制台设置 > `config.json`
+**配置优先级**: 环境变量 `STARCLAW_SKILL_SCAN_MODE` > 控制台设置 > `config.json`
 
 可选值: `block`、`warn`、`off`
 
@@ -384,11 +384,11 @@ CoPaw 的安全系统由三个核心安全层组成:
 
 对于需要深度定制的场景,扫描器支持编程方式配置:
 
-扫描器使用 `src/copaw/security/skill_scanner/rules/signatures/` 中的 YAML 规则文件。你可以通过 YAML 策略文件自定义扫描策略:
+扫描器使用 `src/starclaw/security/skill_scanner/rules/signatures/` 中的 YAML 规则文件。你可以通过 YAML 策略文件自定义扫描策略:
 
 ```python
-from copaw.security.skill_scanner import SkillScanner
-from copaw.security.skill_scanner.scan_policy import ScanPolicy
+from starclaw.security.skill_scanner import SkillScanner
+from starclaw.security.skill_scanner.scan_policy import ScanPolicy
 
 policy = ScanPolicy.from_yaml("my_org_policy.yaml")
 scanner = SkillScanner(policy=policy)
@@ -504,7 +504,7 @@ scanner = SkillScanner(policy=policy)
       "enabled": true,
       "sensitive_files": [
         "~/.ssh/",
-        "~/.copaw.secret/",
+        "~/.starclaw.secret/",
         "/etc/passwd",
         "/etc/shadow",
         ".env",
@@ -530,13 +530,13 @@ scanner = SkillScanner(policy=policy)
 
 ## Web 登录认证
 
-CoPaw 支持可选的 Web 登录认证,保护控制台免受未授权访问。认证**默认关闭**,需要通过 `COPAW_AUTH_ENABLED` 环境变量显式启用。
+StarClaw 支持可选的 Web 登录认证,保护控制台免受未授权访问。认证**默认关闭**,需要通过 `STARCLAW_AUTH_ENABLED` 环境变量显式启用。
 
 <!-- TODO: 在此添加登录页面和注册页面截图 -->
 
 ### 工作原理
 
-1. **启用认证** — 设置 `COPAW_AUTH_ENABLED=true` 并启动 CoPaw
+1. **启用认证** — 设置 `STARCLAW_AUTH_ENABLED=true` 并启动 StarClaw
 2. **注册流程**:
    - 首次访问时,控制台显示**注册页面**
    - 创建唯一的管理员账户(用户名 + 密码)
@@ -546,10 +546,10 @@ CoPaw 支持可选的 Web 登录认证,保护控制台免受未授权访问。�
    - 输入凭据后,生成签名令牌(有效期 7 天)
    - 令牌存储在浏览器 localStorage,自动附加到所有 API 请求
 4. **自动注册**(可选):
-   - 设置 `COPAW_AUTH_USERNAME` 和 `COPAW_AUTH_PASSWORD` 环境变量
-   - CoPaw 启动时自动创建管理员账户,跳过网页注册
+   - 设置 `STARCLAW_AUTH_USERNAME` 和 `STARCLAW_AUTH_PASSWORD` 环境变量
+   - StarClaw 启动时自动创建管理员账户,跳过网页注册
    - 适用于 Docker、Kubernetes、服务器管理面板等自动化部署场景
-5. **本地免认证** — 来自本地(`127.0.0.1` / `::1`)的请求自动跳过认证,CLI 命令(`copaw app`、`copaw chat` 等)无需令牌即可正常工作
+5. **本地免认证** — 来自本地(`127.0.0.1` / `::1`)的请求自动跳过认证,CLI 命令(`starclaw app`、`starclaw chat` 等)无需令牌即可正常工作
 
 **安全特性**:
 
@@ -562,14 +562,14 @@ CoPaw 支持可选的 Web 登录认证,保护控制台免受未授权访问。�
 
 | 变量                  | 说明                         | 是否必填 |
 | --------------------- | ---------------------------- | -------- |
-| `COPAW_AUTH_ENABLED`  | 设为 `true` 启用认证         | **是**   |
-| `COPAW_AUTH_USERNAME` | 自动注册时预设的管理员用户名 | 可选     |
-| `COPAW_AUTH_PASSWORD` | 自动注册时预设的管理员密码   | 可选     |
+| `STARCLAW_AUTH_ENABLED`  | 设为 `true` 启用认证         | **是**   |
+| `STARCLAW_AUTH_USERNAME` | 自动注册时预设的管理员用户名 | 可选     |
+| `STARCLAW_AUTH_PASSWORD` | 自动注册时预设的管理员密码   | 可选     |
 
 **配置说明**:
 
-- `COPAW_AUTH_ENABLED=true` 是启用认证的唯一必需变量
-- `COPAW_AUTH_USERNAME` 和 `COPAW_AUTH_PASSWORD` 成对使用:
+- `STARCLAW_AUTH_ENABLED=true` 是启用认证的唯一必需变量
+- `STARCLAW_AUTH_USERNAME` 和 `STARCLAW_AUTH_PASSWORD` 成对使用:
   - 两者都设置 → 启动时自动创建管理员账户(适用于自动化部署)
   - 不设置或只设置其一 → 首次访问通过网页注册(交互式部署)
 - 如果已有注册用户,自动注册环境变量会被忽略
@@ -584,14 +584,14 @@ CoPaw 支持可选的 Web 登录认证,保护控制台免受未授权访问。�
 
 ```bash
 # 基础启用(网页注册)
-export COPAW_AUTH_ENABLED=true
-copaw app
+export STARCLAW_AUTH_ENABLED=true
+starclaw app
 
 # 或: 自动注册模式
-export COPAW_AUTH_ENABLED=true
-export COPAW_AUTH_USERNAME=admin
-export COPAW_AUTH_PASSWORD=mypassword
-copaw app
+export STARCLAW_AUTH_ENABLED=true
+export STARCLAW_AUTH_USERNAME=admin
+export STARCLAW_AUTH_PASSWORD=mypassword
+starclaw app
 ```
 
 如需永久生效,将 `export` 行添加到 `~/.bashrc`、`~/.zshrc` 或等效文件中。
@@ -599,21 +599,21 @@ copaw app
 **Windows (CMD):**
 
 ```cmd
-set COPAW_AUTH_ENABLED=true
+set STARCLAW_AUTH_ENABLED=true
 rem 可选: 自动注册
-rem set COPAW_AUTH_USERNAME=admin
-rem set COPAW_AUTH_PASSWORD=mypassword
-copaw app
+rem set STARCLAW_AUTH_USERNAME=admin
+rem set STARCLAW_AUTH_PASSWORD=mypassword
+starclaw app
 ```
 
 **Windows (PowerShell):**
 
 ```powershell
-$env:COPAW_AUTH_ENABLED = "true"
+$env:STARCLAW_AUTH_ENABLED = "true"
 # 可选: 自动注册
-# $env:COPAW_AUTH_USERNAME = "admin"
-# $env:COPAW_AUTH_PASSWORD = "mypassword"
-copaw app
+# $env:STARCLAW_AUTH_USERNAME = "admin"
+# $env:STARCLAW_AUTH_PASSWORD = "mypassword"
+starclaw app
 ```
 
 #### Docker
@@ -621,32 +621,32 @@ copaw app
 通过 `-e` 传递环境变量(推荐使用自动注册):
 
 ```bash
-docker run -e COPAW_AUTH_ENABLED=true \
-  -e COPAW_AUTH_USERNAME=admin \
-  -e COPAW_AUTH_PASSWORD=mypassword \
+docker run -e STARCLAW_AUTH_ENABLED=true \
+  -e STARCLAW_AUTH_USERNAME=admin \
+  -e STARCLAW_AUTH_PASSWORD=mypassword \
   -p 127.0.0.1:8088:8088 \
-  -v copaw-data:/app/working \
-  -v copaw-secrets:/app/working.secret \
-  agentscope/copaw:latest
+  -v starclaw-data:/app/working \
+  -v starclaw-secrets:/app/working.secret \
+  agentscope/starclaw:latest
 ```
 
-> **提示**: 不使用自动注册时,移除 `COPAW_AUTH_USERNAME` 和 `COPAW_AUTH_PASSWORD`,首次通过浏览器注册。
+> **提示**: 不使用自动注册时,移除 `STARCLAW_AUTH_USERNAME` 和 `STARCLAW_AUTH_PASSWORD`,首次通过浏览器注册。
 
 #### docker-compose.yml
 
 ```yaml
 services:
-  copaw:
-    image: agentscope/copaw:latest
+  starclaw:
+    image: agentscope/starclaw:latest
     ports:
       - "127.0.0.1:8088:8088"
     environment:
-      - COPAW_AUTH_ENABLED=true
-      - COPAW_AUTH_USERNAME=admin
-      - COPAW_AUTH_PASSWORD=mypassword
+      - STARCLAW_AUTH_ENABLED=true
+      - STARCLAW_AUTH_USERNAME=admin
+      - STARCLAW_AUTH_PASSWORD=mypassword
     volumes:
-      - copaw-data:/app/working
-      - copaw-secrets:/app/working.secret
+      - starclaw-data:/app/working
+      - starclaw-secrets:/app/working.secret
 ```
 
 #### 环境文件 (.env)
@@ -654,24 +654,24 @@ services:
 也可以使用 `.env` 文件：
 
 ```
-COPAW_AUTH_ENABLED=true
-COPAW_AUTH_USERNAME=admin
-COPAW_AUTH_PASSWORD=mypassword
+STARCLAW_AUTH_ENABLED=true
+STARCLAW_AUTH_USERNAME=admin
+STARCLAW_AUTH_PASSWORD=mypassword
 ```
 
-然后通过 `--env-file .env` 传递给 Docker，或在运行 `copaw app` 前在 shell 中 source 该文件。
+然后通过 `--env-file .env` 传递给 Docker，或在运行 `starclaw app` 前在 shell 中 source 该文件。
 
 ### 关闭认证
 
-移除或取消环境变量并重启 CoPaw：
+移除或取消环境变量并重启 StarClaw：
 
 ```bash
 # Linux / macOS
-unset COPAW_AUTH_ENABLED
-copaw app
+unset STARCLAW_AUTH_ENABLED
+starclaw app
 
 # Docker — 移除 -e 参数即可。以下示例包含用于持久化的卷。
-docker run -p 127.0.0.1:8088:8088 -v copaw-data:/app/working -v copaw-secrets:/app/working.secret agentscope/copaw:latest
+docker run -p 127.0.0.1:8088:8088 -v starclaw-data:/app/working -v starclaw-secrets:/app/working.secret agentscope/starclaw:latest
 ```
 
 ### 重置密码
@@ -679,7 +679,7 @@ docker run -p 127.0.0.1:8088:8088 -v copaw-data:/app/working -v copaw-secrets:/a
 如果忘记密码,使用 CLI 命令重置:
 
 ```bash
-copaw auth reset-password
+starclaw auth reset-password
 ```
 
 该命令会:
@@ -691,7 +691,7 @@ copaw auth reset-password
 **Docker 部署**:
 
 ```bash
-docker exec -it <容器名> copaw auth reset-password
+docker exec -it <容器名> starclaw auth reset-password
 ```
 
 **替代方案**:
@@ -700,9 +700,9 @@ docker exec -it <容器名> copaw auth reset-password
 
 ```bash
 # 删除认证文件
-rm ~/.copaw.secret/auth.json  # 或 $WORKING_DIR.secret/auth.json
-# 重启 CoPaw,下次访问时重新注册
-copaw app
+rm ~/.starclaw.secret/auth.json  # 或 $WORKING_DIR.secret/auth.json
+# 重启 StarClaw,下次访问时重新注册
+starclaw app
 ```
 
 ### 退出登录

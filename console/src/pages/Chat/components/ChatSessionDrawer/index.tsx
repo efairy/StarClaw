@@ -12,7 +12,7 @@ import sessionApi from "../../sessionApi";
 import ChatSessionItem from "../ChatSessionItem";
 import styles from "./index.module.less";
 
-/** Sessions from CoPaw backend include extra fields beyond the runtime UI type */
+/** Sessions from StarClaw backend include extra fields beyond the runtime UI type */
 interface ExtendedChatSession extends IAgentScopeRuntimeWebUISession {
   realId?: string;
   sessionId?: string;

@@ -59,8 +59,8 @@ require_buildx_imagetools() {
 
 require_buildx_imagetools
 
-ACR_REGISTRY="agentscope-registry.ap-southeast-1.cr.aliyuncs.com"
-IMAGE="agentscope/copaw"
+ACR_REGISTRY="# removed"
+IMAGE="efairy/StarClaw"
 
 ACR_PRE="${ACR_REGISTRY}/${IMAGE}:pre"
 ACR_LATEST="${ACR_REGISTRY}/${IMAGE}:latest"

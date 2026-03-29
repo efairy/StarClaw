@@ -1,16 +1,16 @@
 # 控制台
 
-**控制台** 是 CoPaw 内置的 Web 管理界面。运行 `copaw app` 后，在浏览器中打开
+**控制台** 是 StarClaw 内置的 Web 管理界面。运行 `starclaw app` 后，在浏览器中打开
 `http://127.0.0.1:8088/` 即可进入。
 
 **在控制台中你可以：**
 
-- 和 CoPaw 实时对话
+- 和 StarClaw 实时对话
 - 启用/禁用/配置消息频道
 - 管理所有聊天会话
 - 管理定时任务和心跳
-- 编辑 CoPaw 的人设和行为文件
-- 开关/导入技能以定制 CoPaw 的能力
+- 编辑 StarClaw 的人设和行为文件
+- 开关/导入技能以定制 StarClaw 的能力
 - 开关工具
 - 管理MCP客户端
 - 修改运行配置
@@ -32,7 +32,7 @@
 
 > 侧边栏：**聊天 → 聊天**
 
-这是你和 CoPaw 对话的地方。打开控制台后默认就是这个页面。
+这是你和 StarClaw 对话的地方。打开控制台后默认就是这个页面。
 
 ![聊天](https://img.alicdn.com/imgextra/i4/O1CN01Q0kWkE1WlHCNXeUlb_!!6000000002828-2-tps-3822-2070.png)
 
@@ -40,7 +40,7 @@
 聊天页面左上角可以为当前智能体选择需要使用的模型。
 
 **发送消息：**
-在底部输入框中输入内容，按 **Enter** 或点击发送按钮（↑），CoPaw 会实时回复。
+在底部输入框中输入内容，按 **Enter** 或点击发送按钮（↑），StarClaw 会实时回复。
 
 **语音输入：**
 发送区支持**语音输入**（需浏览器与系统麦克风权限）。处理方式与 **语音转写** 中的设置一致（例如先转写再交给模型）。
@@ -111,15 +111,15 @@
 
 > 侧边栏：**控制 → 定时任务**
 
-在这里创建和管理 CoPaw 按时间自动执行的定时任务。
+在这里创建和管理 StarClaw 按时间自动执行的定时任务。
 
 ![定时任务](https://img.alicdn.com/imgextra/i1/O1CN01B83KJC1LptPwniEDa_!!6000000001349-2-tps-3822-2070.png)
 
 **创建新任务：**
 
-> 如果定时任务没有创建成功，可以参考 [FAQ](https://copaw.agentscope.io/docs/faq) 的 **定时任务错误排查** 寻找原因
+> 如果定时任务没有创建成功，可以参考 [FAQ](https://efairy.github.io/StarClaw/docs/faq) 的 **定时任务错误排查** 寻找原因
 
-创建定时任务的 **最简单的方式是直接与 CoPaw 对话**，让他为你创建。例如你想在钉钉上收到喝水提醒，则在钉钉上与 CoPaw 对话：“帮我创建一个定时任务，每隔 5 分钟提醒我喝水。”创建完成后，可以在控制台的定时任务页面看到创建好的定时任务。
+创建定时任务的 **最简单的方式是直接与 StarClaw 对话**，让他为你创建。例如你想在钉钉上收到喝水提醒，则在钉钉上与 StarClaw 对话：“帮我创建一个定时任务，每隔 5 分钟提醒我喝水。”创建完成后，可以在控制台的定时任务页面看到创建好的定时任务。
 
 另外一种方式是在控制台页面创建：
 
@@ -133,7 +133,7 @@
    - **调度** —— 可选择执行时间；如果选项不满足需求，可填写 **Cron 表达式**（五段式，如 `0 9 * * *` = 每天 9:00）。时区默认采用当前智能体的用户时区，可在此修改。
    - **任务类型及内容**
      — 选择 **text**：发送**消息内容**中的固定文本
-     - 选择**agent**：填写**请求内容**，会定时向CoPaw转发content.text中的请求文本
+     - 选择**agent**：填写**请求内容**，会定时向StarClaw转发content.text中的请求文本
    - **投递** —— 选择目标频道（如 Console、钉钉）、目标用户、目标会话ID以及分发模式
      （**流式** = 实时发送，**最终** = 完成后一次性发送）。
    - **高级选项** —— 按需调整最大并发数、超时时间和宽限时间。
@@ -159,7 +159,7 @@
 
 <!--TODO: figure-->
 
-为**当前选中的智能体**配置定时「自检」：按间隔把 `HEARTBEAT.md` 里的内容当作用户消息发给 CoPaw，并可把回复投递到指定目标。
+为**当前选中的智能体**配置定时「自检」：按间隔把 `HEARTBEAT.md` 里的内容当作用户消息发给 StarClaw，并可把回复投递到指定目标。
 
 **常用项：**
 
@@ -176,11 +176,11 @@
 
 > 侧边栏：**智能体 → 工作区**
 
-在这里编辑定义 CoPaw 人设和行为的文件——SOUL.md、AGENTS.md、
+在这里编辑定义 StarClaw 人设和行为的文件——SOUL.md、AGENTS.md、
 HEARTBEAT.md 等——全部在浏览器中完成。
 
-> **多智能体：** 从 **v0.1.0** 开始，CoPaw 支持**多智能体**功能。
-> 您可以在同一个 CoPaw 实例中运行多个独立的智能体，每个智能体拥有独立的
+> **多智能体：** 从 **v0.1.0** 开始，StarClaw 支持**多智能体**功能。
+> 您可以在同一个 StarClaw 实例中运行多个独立的智能体，每个智能体拥有独立的
 > 工作区、配置、记忆和对话历史。智能体之间还可以互相协作。在控制台顶部可以切换当前操作的智能体。
 > 详见 [多智能体](./multi-agent)。
 
@@ -211,7 +211,7 @@ HEARTBEAT.md 等——全部在浏览器中完成。
 
 > 侧边栏：**智能体 → 技能**
 
-在这里管理扩展 CoPaw 能力的技能（如读取 PDF、创建 Word 文档、获取新闻等）。
+在这里管理扩展 StarClaw 能力的技能（如读取 PDF、创建 Word 文档、获取新闻等）。
 
 ![技能](https://img.alicdn.com/imgextra/i1/O1CN018YXGth1JcUb7KAQ7S_!!6000000001049-2-tps-3822-2070.png)
 
@@ -311,9 +311,9 @@ HEARTBEAT.md 等——全部在浏览器中完成。
 
 > 侧边栏：**设置 → 模型**
 
-在这里配置 LLM 提供商，并为 CoPaw 选择全局默认的 LLM 模型。新建智能体会默认使用该全局 LLM，可以在聊天页面左上角为不同智能体单独选择使用的模型。
+在这里配置 LLM 提供商，并为 StarClaw 选择全局默认的 LLM 模型。新建智能体会默认使用该全局 LLM，可以在聊天页面左上角为不同智能体单独选择使用的模型。
 
-CoPaw 同时支持云提供商（需要 API Key）和本地提供商（无需 API Key）。详细配置方式请见 [模型](./models)。
+StarClaw 同时支持云提供商（需要 API Key）和本地提供商（无需 API Key）。详细配置方式请见 [模型](./models)。
 
 ![模型](https://img.alicdn.com/imgextra/i4/O1CN01s3hlCB1ieCT8O91Vi_!!6000000004437-2-tps-3822-2070.png)
 
@@ -335,8 +335,8 @@ CoPaw 同时支持云提供商（需要 API Key）和本地提供商（无需 AP
 ### 本地提供商（llama.cpp / MLX）
 
 本地提供商显示紫色的 **本地** 标签。
-使用前需先安装后端依赖（`pip install 'copaw[llamacpp]'` 或
-`pip install 'copaw[mlx]'`）。
+使用前需先安装后端依赖（`pip install 'starclaw[llamacpp]'` 或
+`pip install 'starclaw[mlx]'`）。
 
 **下载模型：**
 
@@ -357,7 +357,7 @@ Ollama 提供商集成本地 Ollama 守护进程，动态加载其中的模型�
 **前置条件：**
 
 - 从 [ollama.com](https://ollama.com) 安装 Ollama
-- 安装 Ollama SDK：`pip install 'copaw[ollama]'`（或使用 `--extras ollama` 重新运行安装脚本）
+- 安装 Ollama SDK：`pip install 'starclaw[ollama]'`（或使用 `--extras ollama` 重新运行安装脚本）
 
 **下载模型：**
 
@@ -374,15 +374,15 @@ Ollama 提供商集成本地 Ollama 守护进程，动态加载其中的模型�
 
 **与本地模型的区别：**
 
-- 模型来自 Ollama 守护进程（不由 CoPaw 直接下载）
+- 模型来自 Ollama 守护进程（不由 StarClaw 直接下载）
 - 模型列表与 Ollama 自动同步
 - 支持热门模型：`mistral:7b`、`qwen3:8b` 等
 
-> 也可以通过 CLI 管理 Ollama 模型：`copaw models ollama-pull`、`copaw models ollama-list`、`copaw models ollama-remove`。详见 [CLI](./cli#ollama-模型)。
+> 也可以通过 CLI 管理 Ollama 模型：`starclaw models ollama-pull`、`starclaw models ollama-list`、`starclaw models ollama-remove`。详见 [CLI](./cli#ollama-模型)。
 
-> ⚠️ **运行 CoPaw 前必须将上下文长度设为 32K 以上**
+> ⚠️ **运行 StarClaw 前必须将上下文长度设为 32K 以上**
 >
-> 为了正常运行 CoPaw，必须将模型 context length 设置为 **32K 或更高**。注意，这会消耗较多的计算资源，请确保你的本地机器能够支持。
+> 为了正常运行 StarClaw，必须将模型 context length 设置为 **32K 或更高**。注意，这会消耗较多的计算资源，请确保你的本地机器能够支持。
 >
 > ![Ollama context length 配置示意图](https://img.alicdn.com/imgextra/i3/O1CN01JrqRjE1l6FxuO3IMl_!!6000000004769-2-tps-699-656.png)
 
@@ -402,11 +402,11 @@ LM Studio 提供商连接 LM Studio 桌面应用内置的 OpenAI 兼容本地服
 3. 点击 **模型** 查看 LM Studio 中当前已加载的模型，也可手动添加模型 ID。
 4. 在 **提供商** 下拉菜单中选择 LM Studio，选择模型后点击 **保存**。
 
-> LM Studio 默认不需要 API Key。模型必须在 LM Studio 中加载后才会在 CoPaw 中显示。
+> LM Studio 默认不需要 API Key。模型必须在 LM Studio 中加载后才会在 StarClaw 中显示。
 
-> ⚠️ **运行 CoPaw 前必须将上下文长度设为 32K 以上**
+> ⚠️ **运行 StarClaw 前必须将上下文长度设为 32K 以上**
 >
-> 为了正常运行 CoPaw，必须将模型 context length 设置为 **32K 或更高**。注意，这会消耗较多的计算资源，请确保你的本地机器能够支持。
+> 为了正常运行 StarClaw，必须将模型 context length 设置为 **32K 或更高**。注意，这会消耗较多的计算资源，请确保你的本地机器能够支持。
 >
 > ![LM Studio context length 配置示意图](https://img.alicdn.com/imgextra/i4/O1CN01LWyG6o21E4Zovqv4G_!!6000000006952-2-tps-923-618.png)
 
@@ -417,7 +417,7 @@ LM Studio 提供商连接 LM Studio 桌面应用内置的 OpenAI 兼容本地服
 2. 在 **模型** 下拉菜单中选择一个模型。
 3. 点 **保存**。
 
-> **注意：** 云提供商 API Key 的有效性需要用户自行保证，CoPaw 不会验证。
+> **注意：** 云提供商 API Key 的有效性需要用户自行保证，StarClaw 不会验证。
 >
 > 提供商详细说明见 [配置 — 模型提供商](./config#模型提供商)。
 
@@ -427,7 +427,7 @@ LM Studio 提供商连接 LM Studio 桌面应用内置的 OpenAI 兼容本地服
 
 > 侧边栏：**设置 → 环境变量**
 
-在这里管理 CoPaw 的工具和技能在运行时需要的环境变量（如 `TAVILY_API_KEY`）。
+在这里管理 StarClaw 的工具和技能在运行时需要的环境变量（如 `TAVILY_API_KEY`）。
 
 ![环境变量](https://img.alicdn.com/imgextra/i2/O1CN01H5652Z1byAQQ3JVC4_!!6000000003533-2-tps-3822-2070.png)
 
@@ -447,7 +447,7 @@ LM Studio 提供商连接 LM Studio 桌面应用内置的 OpenAI 兼容本地服
 **批量删除：**
 勾选要删除的行 → 点工具栏的 **删除** → 确认删除。
 
-> **注意：** 环境变量值的有效性需要用户自行保证，CoPaw 只负责存储和加载。
+> **注意：** 环境变量值的有效性需要用户自行保证，StarClaw 只负责存储和加载。
 >
 > 更多说明见 [配置 — 环境变量](./config#环境变量)。
 
@@ -481,9 +481,9 @@ LM Studio 提供商连接 LM Studio 桌面应用内置的 OpenAI 兼容本地服
 
 **通过对话查询：**
 
-在聊天中直接问 CoPaw「最近用了多少 token？」或「帮我看看 token 消耗」，Agent 会调用 `get_token_usage` 工具并返回统计结果。
+在聊天中直接问 StarClaw「最近用了多少 token？」或「帮我看看 token 消耗」，Agent 会调用 `get_token_usage` 工具并返回统计结果。
 
-> 数据存储在 `~/.copaw/token_usage.json`，可通过 `COPAW_TOKEN_USAGE_FILE` 环境变量自定义文件名。详见 [配置 — 环境变量](./config#环境变量)。
+> 数据存储在 `~/.starclaw/token_usage.json`，可通过 `STARCLAW_TOKEN_USAGE_FILE` 环境变量自定义文件名。详见 [配置 — 环境变量](./config#环境变量)。
 
 ---
 
@@ -496,7 +496,7 @@ LM Studio 提供商连接 LM Studio 桌面应用内置的 OpenAI 兼容本地服
 配置**各频道发来的语音/音频**在进入模型前的处理方式（与聊天里的语音输入、频道语音消息共用这套设置）。
 
 - **音频模式**：**自动** — 先按下方转写设置转成文字再交给模型（多数模型适用）；**原生** — 直接把音频当附件交给模型（仅部分支持音频的模型可用）。
-- **转写后端**：**关闭**；**Whisper API** — 使用兼容 OpenAI `audio/transcriptions` 的提供商，需在 [模型](#模型) 中配置好对应密钥并在此选中提供商；**本地 Whisper** — 本机运行，需安装 `ffmpeg` 与 `pip install 'copaw[whisper]'`。
+- **转写后端**：**关闭**；**Whisper API** — 使用兼容 OpenAI `audio/transcriptions` 的提供商，需在 [模型](#模型) 中配置好对应密钥并在此选中提供商；**本地 Whisper** — 本机运行，需安装 `ffmpeg` 与 `pip install 'starclaw[whisper]'`。
 
 保存后对新收到的语音生效。详情以页面内说明为准。
 

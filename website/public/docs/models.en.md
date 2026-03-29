@@ -1,12 +1,12 @@
 # Models
 
-You need to configure a model before chatting with CoPaw. Use **Console → Settings → Models** for the quickest setup.
+You need to configure a model before chatting with StarClaw. Use **Console → Settings → Models** for the quickest setup.
 
 After configuration, choose **Default LLM** at the top of the Models page. New agents use that global default. To override, open **Chat** and pick a model in the top-left for the current agent.
 
 ![Console models](https://img.alicdn.com/imgextra/i1/O1CN01zHAE1Z26w6jXl2xbr_!!6000000007725-2-tps-3802-1968.png)
 
-CoPaw supports multiple LLM providers: **cloud providers** (require an API Key, including Google Gemini), **local providers** (llama.cpp / MLX), **Ollama**, **LM Studio**, and **custom providers**. This page explains how to configure each.
+StarClaw supports multiple LLM providers: **cloud providers** (require an API Key, including Google Gemini), **local providers** (llama.cpp / MLX), **Ollama**, **LM Studio**, and **custom providers**. This page explains how to configure each.
 
 ---
 
@@ -49,13 +49,13 @@ The Google Gemini provider uses Google's native Gemini API (via the `google-gena
 
 ```bash
 # Configure the API key
-copaw models config-key gemini
+starclaw models config-key gemini
 
 # Set Gemini as the active LLM
-copaw models set-llm
+starclaw models set-llm
 ```
 
-> **Tip:** Gemini models with thinking capabilities (e.g. Gemini 3.1 Pro, Gemini 2.5 Pro, Gemini 2.5 Flash) support extended reasoning. CoPaw automatically handles thinking blocks and thought signatures from these models.
+> **Tip:** Gemini models with thinking capabilities (e.g. Gemini 3.1 Pro, Gemini 2.5 Pro, Gemini 2.5 Flash) support extended reasoning. StarClaw automatically handles thinking blocks and thought signatures from these models.
 
 ## MiniMax provider
 
@@ -90,7 +90,7 @@ MiniMax offers two access points: International (MiniMax) and China (MiniMax Chi
 
 **Manual configuration:**
 
-Add to the `providers` field in `$COPAW_SECRET_DIR/providers.json` (default `~/.copaw.secret/providers.json`):
+Add to the `providers` field in `$STARCLAW_SECRET_DIR/providers.json` (default `~/.starclaw.secret/providers.json`):
 
 ```json
 {
@@ -122,9 +122,9 @@ Local providers run models on your machine with **no API Key**; data stays on-de
 
 **Prerequisites:**
 
-- Install the matching backend in the same environment as CoPaw:
-  - llama.cpp: `pip install 'copaw[llamacpp]'`
-  - MLX: `pip install 'copaw[mlx]'`
+- Install the matching backend in the same environment as StarClaw:
+  - llama.cpp: `pip install 'starclaw[llamacpp]'`
+  - MLX: `pip install 'starclaw[mlx]'`
 
 1. On the Models page you’ll see cards for llama.cpp and MLX.
 
@@ -156,12 +156,12 @@ Local providers run models on your machine with **no API Key**; data stays on-de
 
 ## Ollama provider
 
-The Ollama provider uses the **Ollama daemon** on your machine. CoPaw does not download model files itself; the list stays in sync with Ollama.
+The Ollama provider uses the **Ollama daemon** on your machine. StarClaw does not download model files itself; the list stays in sync with Ollama.
 
 **Prerequisites:**
 
 - Install Ollama from [ollama.com](https://ollama.com).
-- Install Ollama support in CoPaw’s environment: `pip install 'copaw[ollama]'`.
+- Install Ollama support in StarClaw’s environment: `pip install 'starclaw[ollama]'`.
 
 1. On the Models page you’ll see the Ollama provider card.
 
@@ -185,15 +185,15 @@ The Ollama provider uses the **Ollama daemon** on your machine. CoPaw does not d
 
 7. For a per-agent model, switch agent at the top, then pick a model in **Chat**.
 
-> If you see `Ollama SDK not installed. Install with: pip install 'copaw[ollama]'`, install Ollama from ollama.com and run `pip install 'copaw[ollama]'` in CoPaw’s environment. To remove a model, open **Models** on the Ollama card and use the **trash** button, then confirm.
+> If you see `Ollama SDK not installed. Install with: pip install 'starclaw[ollama]'`, install Ollama from ollama.com and run `pip install 'starclaw[ollama]'` in StarClaw’s environment. To remove a model, open **Models** on the Ollama card and use the **trash** button, then confirm.
 >
-> **Docker users:** Inside a container, `localhost` is the container, not the host. Set Ollama Base URL to `http://host.docker.internal:11434` and add `--add-host=host.docker.internal:host-gateway` to `docker run`. See the [README Docker section](https://github.com/agentscope-ai/CoPaw#using-docker).
+> **Docker users:** Inside a container, `localhost` is the container, not the host. Set Ollama Base URL to `http://host.docker.internal:11434` and add `--add-host=host.docker.internal:host-gateway` to `docker run`. See the [README Docker section](https://github.com/efairy/StarClaw#using-docker).
 >
 > ![delete](https://img.alicdn.com/imgextra/i1/O1CN01OvNNu21shXVzD14go_!!6000000005798-2-tps-3802-1968.png)
 
 ## LM Studio provider
 
-The LM Studio provider connects to the **LM Studio** app’s OpenAI-compatible server. Models are managed in LM Studio; CoPaw discovers them via `/v1/models`.
+The LM Studio provider connects to the **LM Studio** app’s OpenAI-compatible server. Models are managed in LM Studio; StarClaw discovers them via `/v1/models`.
 
 **Prerequisites:**
 
@@ -210,11 +210,11 @@ The LM Studio provider connects to the **LM Studio** app’s OpenAI-compatible s
 
 5. For a per-agent model, switch agent at the top, then pick a model in **Chat**.
 
-> **Tip:** LM Studio usually needs no API key. If you enabled auth in LM Studio, fill **API Key** here. Models must be loaded in LM Studio before they show in CoPaw.
+> **Tip:** LM Studio usually needs no API key. If you enabled auth in LM Studio, fill **API Key** here. Models must be loaded in LM Studio before they show in StarClaw.
 >
-> **Important — context length:** LM Studio defaults are often 2048–4096 tokens. CoPaw’s system prompt (AGENTS.md + SOUL.md + PROFILE.md) can exceed that and trigger _"The number of tokens to keep from the initial prompt is greater than the context length"_. **Unload the model in LM Studio and reload with a larger context** (≥ 16384 recommended), e.g. in the GUI (Model settings → Context length) or CLI: `lms unload --all && lms load <model> -c 16384`.
+> **Important — context length:** LM Studio defaults are often 2048–4096 tokens. StarClaw’s system prompt (AGENTS.md + SOUL.md + PROFILE.md) can exceed that and trigger _"The number of tokens to keep from the initial prompt is greater than the context length"_. **Unload the model in LM Studio and reload with a larger context** (≥ 16384 recommended), e.g. in the GUI (Model settings → Context length) or CLI: `lms unload --all && lms load <model> -c 16384`.
 >
-> **Docker users:** Use `http://host.docker.internal:1234/v1` and `--add-host=host.docker.internal:host-gateway`. See the [README Docker section](https://github.com/agentscope-ai/CoPaw#using-docker).
+> **Docker users:** Use `http://host.docker.internal:1234/v1` and `--add-host=host.docker.internal:host-gateway`. See the [README Docker section](https://github.com/efairy/StarClaw#using-docker).
 
 ## Add custom provider
 
@@ -254,7 +254,7 @@ The LM Studio provider connects to the **LM Studio** app’s OpenAI-compatible s
 
 ## Configuration File Reference
 
-Model provider configurations are stored in `$COPAW_SECRET_DIR/providers.json` (default: `~/.copaw.secret/providers.json`).
+Model provider configurations are stored in `$STARCLAW_SECRET_DIR/providers.json` (default: `~/.starclaw.secret/providers.json`).
 
 ### `providers.json` Structure
 
@@ -302,4 +302,4 @@ Each provider (key is provider_id) contains the following fields:
 | `provider_id` | string | Currently active provider ID |
 | `model`       | string | Currently active model name  |
 
-> **Tip:** Model configuration is typically managed through the Console or `copaw init` without manually editing this file.
+> **Tip:** Model configuration is typically managed through the Console or `starclaw init` without manually editing this file.

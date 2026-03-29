@@ -1,12 +1,12 @@
 # 模型
 
-在与CoPaw对话前，需要先配置模型。在 **控制台 → 设置 → 模型** 中可以快捷配置。
+在与StarClaw对话前，需要先配置模型。在 **控制台 → 设置 → 模型** 中可以快捷配置。
 
 配置好模型后，可在模型页面最上方选择 **默认 LLM**，新建智能体会选择使用该全局默认模型。如需切换，可在 **聊天** 页面为具体智能体单独选择使用的模型。
 
 ![控制台模型](https://img.alicdn.com/imgextra/i4/O1CN01XnOPPQ1c99vox3I88_!!6000000003557-2-tps-3786-1980.png)
 
-CoPaw 支持多种 LLM 提供商：**云提供商**（需 API Key，包括 Google Gemini）、**本地提供商**（llama.cpp / MLX）、**Ollama 提供商**、**LM Studio 提供商**，且支持添加自定义 **提供商**。本文介绍这几类提供商的配置方式。
+StarClaw 支持多种 LLM 提供商：**云提供商**（需 API Key，包括 Google Gemini）、**本地提供商**（llama.cpp / MLX）、**Ollama 提供商**、**LM Studio 提供商**，且支持添加自定义 **提供商**。本文介绍这几类提供商的配置方式。
 
 ---
 
@@ -49,13 +49,13 @@ Google Gemini 提供商通过 Google 原生 Gemini API（使用 `google-genai` S
 
 ```bash
 # 配置 API Key
-copaw models config-key gemini
+starclaw models config-key gemini
 
 # 将 Gemini 设为活跃 LLM
-copaw models set-llm
+starclaw models set-llm
 ```
 
-> **提示：** 具有思考能力的 Gemini 模型（如 Gemini 3.1 Pro、Gemini 2.5 Pro、Gemini 2.5 Flash）支持扩展推理。CoPaw 会自动处理这些模型返回的思考块和思考签名。
+> **提示：** 具有思考能力的 Gemini 模型（如 Gemini 3.1 Pro、Gemini 2.5 Pro、Gemini 2.5 Flash）支持扩展推理。StarClaw 会自动处理这些模型返回的思考块和思考签名。
 
 ## MiniMax 提供商
 
@@ -90,7 +90,7 @@ MiniMax 提供国际版（MiniMax）和中国版（MiniMax China）两个接入�
 
 **手动编辑配置文件：**
 
-在 `$COPAW_SECRET_DIR/providers.json`（默认 `~/.copaw.secret/providers.json`）的 `providers` 字段中添加：
+在 `$STARCLAW_SECRET_DIR/providers.json`（默认 `~/.starclaw.secret/providers.json`）的 `providers` 字段中添加：
 
 ```json
 {
@@ -122,9 +122,9 @@ MiniMax 提供国际版（MiniMax）和中国版（MiniMax China）两个接入�
 
 **前置条件：**
 
-- 在CoPaw所在环境中安装对应后端：
-  - llama.cpp：`pip install 'copaw[llamacpp]'`
-  - MLX：`pip install 'copaw[mlx]'`
+- 在StarClaw所在环境中安装对应后端：
+  - llama.cpp：`pip install 'starclaw[llamacpp]'`
+  - MLX：`pip install 'starclaw[mlx]'`
 
 1. 在控制台的模型页面可以找到 llama.cpp 和 MLX 对应的卡片。
 
@@ -156,12 +156,12 @@ MiniMax 提供国际版（MiniMax）和中国版（MiniMax China）两个接入�
 
 ## Ollama 提供商
 
-Ollama 提供商对接本机安装的 **Ollama 守护进程**，使用其中的模型，无需由 CoPaw 直接下载模型文件，列表会与 Ollama 自动同步。
+Ollama 提供商对接本机安装的 **Ollama 守护进程**，使用其中的模型，无需由 StarClaw 直接下载模型文件，列表会与 Ollama 自动同步。
 
 **前置条件：**
 
 - 从 [ollama.com](https://ollama.com) 安装 Ollama。
-- 在 CoPaw所在虚拟环境中安装 Ollama：`pip install 'copaw[ollama]'`。
+- 在 StarClaw所在虚拟环境中安装 Ollama：`pip install 'starclaw[ollama]'`。
 
 1. 在控制台的模型界面中，可以看到 ollama 提供商对应的卡片。
 
@@ -185,15 +185,15 @@ Ollama 提供商对接本机安装的 **Ollama 守护进程**，使用其中的�
 
 7. 如果想为不同智能体配置单独的模型，可以在 console 页面最上方切换智能体，并在 **聊天** 页面左上角为当前智能体选择单独的模型。
 
-> 如果在过程中遇到 `Ollama SDK not installed. Install with: pip install 'copaw[ollama]'`的提示，请先确认是否已经在 ollama.com 下载 Ollama，并在 CoPaw所在虚拟环境中执行过 `pip install 'copaw[ollama]'`。如果想删除某个模型，点击 Ollama 卡片右下角的 **模型**，在模型列表中，点击想要删除的模型右侧的 **垃圾桶按钮**，二次确认后即可删除。
+> 如果在过程中遇到 `Ollama SDK not installed. Install with: pip install 'starclaw[ollama]'`的提示，请先确认是否已经在 ollama.com 下载 Ollama，并在 StarClaw所在虚拟环境中执行过 `pip install 'starclaw[ollama]'`。如果想删除某个模型，点击 Ollama 卡片右下角的 **模型**，在模型列表中，点击想要删除的模型右侧的 **垃圾桶按钮**，二次确认后即可删除。
 >
-> **Docker 用户：** 如果 CoPaw 运行在 Docker 容器中，`localhost` 指向的是容器自身而非宿主机。请将 Ollama 的 Base URL 改为 `http://host.docker.internal:11434`（并在 `docker run` 命令中添加 `--add-host=host.docker.internal:host-gateway`）。详见 [README 的 Docker 章节](https://github.com/agentscope-ai/CoPaw#使用-docker)。
+> **Docker 用户：** 如果 StarClaw 运行在 Docker 容器中，`localhost` 指向的是容器自身而非宿主机。请将 Ollama 的 Base URL 改为 `http://host.docker.internal:11434`（并在 `docker run` 命令中添加 `--add-host=host.docker.internal:host-gateway`）。详见 [README 的 Docker 章节](https://github.com/efairy/StarClaw#使用-docker)。
 >
 > ![delete](https://img.alicdn.com/imgextra/i2/O1CN01p2o85m1Ul9rkY87PS_!!6000000002557-2-tps-3802-1968.png)
 
 ## LM Studio 提供商
 
-LM Studio 提供商连接 **LM Studio** 桌面应用内置的 OpenAI 兼容服务器。模型在 LM Studio 的图形界面中管理，CoPaw 通过 `/v1/models` 端点自动发现已加载的模型。
+LM Studio 提供商连接 **LM Studio** 桌面应用内置的 OpenAI 兼容服务器。模型在 LM Studio 的图形界面中管理，StarClaw 通过 `/v1/models` 端点自动发现已加载的模型。
 
 **前置条件：**
 
@@ -210,11 +210,11 @@ LM Studio 提供商连接 **LM Studio** 桌面应用内置的 OpenAI 兼容服�
 
 5. 如果想为不同智能体配置单独的模型，可以在 console 页面最上方切换智能体，并在 **聊天** 页面左上角为当前智能体选择单独的模型。
 
-> **提示：** LM Studio 默认不需要 API Key。如果你在 LM Studio 中启用了认证功能，请在 **API Key** 字段中填入对应的密钥。模型必须在 LM Studio 的图形界面中加载后才会在 CoPaw 中显示。
+> **提示：** LM Studio 默认不需要 API Key。如果你在 LM Studio 中启用了认证功能，请在 **API Key** 字段中填入对应的密钥。模型必须在 LM Studio 的图形界面中加载后才会在 StarClaw 中显示。
 >
-> **重要 — 上下文长度：** LM Studio 加载模型时默认的上下文长度较小（通常为 2048 或 4096 tokens）。CoPaw 的系统提示词（AGENTS.md + SOUL.md + PROFILE.md）可能会超过此限制，导致报错 _"The number of tokens to keep from the initial prompt is greater than the context length"_。解决方法：**在 LM Studio 中卸载模型，然后以更大的上下文长度重新加载**（建议 16384 及以上）。可以在 LM Studio 图形界面中调整（模型设置 → Context Length），也可以通过 CLI 操作：`lms unload --all && lms load <model> -c 16384`。
+> **重要 — 上下文长度：** LM Studio 加载模型时默认的上下文长度较小（通常为 2048 或 4096 tokens）。StarClaw 的系统提示词（AGENTS.md + SOUL.md + PROFILE.md）可能会超过此限制，导致报错 _"The number of tokens to keep from the initial prompt is greater than the context length"_。解决方法：**在 LM Studio 中卸载模型，然后以更大的上下文长度重新加载**（建议 16384 及以上）。可以在 LM Studio 图形界面中调整（模型设置 → Context Length），也可以通过 CLI 操作：`lms unload --all && lms load <model> -c 16384`。
 >
-> **Docker 用户：** 如果 CoPaw 运行在 Docker 容器中，`localhost` 指向的是容器自身而非宿主机。请将 LM Studio 的 Base URL 改为 `http://host.docker.internal:1234/v1`（并在 `docker run` 命令中添加 `--add-host=host.docker.internal:host-gateway`）。详见 [README 的 Docker 章节](https://github.com/agentscope-ai/CoPaw#使用-docker)。
+> **Docker 用户：** 如果 StarClaw 运行在 Docker 容器中，`localhost` 指向的是容器自身而非宿主机。请将 LM Studio 的 Base URL 改为 `http://host.docker.internal:1234/v1`（并在 `docker run` 命令中添加 `--add-host=host.docker.internal:host-gateway`）。详见 [README 的 Docker 章节](https://github.com/efairy/StarClaw#使用-docker)。
 
 ## 添加自定义提供商
 
@@ -254,7 +254,7 @@ LM Studio 提供商连接 **LM Studio** 桌面应用内置的 OpenAI 兼容服�
 
 ## 配置文件参考
 
-模型提供商的配置存储在 `$COPAW_SECRET_DIR/providers.json`（默认 `~/.copaw.secret/providers.json`）。
+模型提供商的配置存储在 `$STARCLAW_SECRET_DIR/providers.json`（默认 `~/.starclaw.secret/providers.json`）。
 
 ### `providers.json` 结构
 
@@ -302,4 +302,4 @@ LM Studio 提供商连接 **LM Studio** 桌面应用内置的 OpenAI 兼容服�
 | `provider_id` | string | 当前激活的提供商 ID |
 | `model`       | string | 当前激活的模型名称  |
 
-> **提示：** 通常通过控制台或 `copaw init` 管理模型配置，无需手动编辑此文件。
+> **提示：** 通常通过控制台或 `starclaw init` 管理模型配置，无需手动编辑此文件。

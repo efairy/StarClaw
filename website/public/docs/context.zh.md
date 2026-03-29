@@ -10,7 +10,7 @@ LLM 的上下文窗口就像一个**有限容量的背包** 🎒。每次对话�
 
 ### 工作原理 — 总结
 
-CoPaw 上下文管理分为两条并行的 Offload 路径，共同解决上下文窗口有限的问题：
+StarClaw 上下文管理分为两条并行的 Offload 路径，共同解决上下文窗口有限的问题：
 
 | 机制                 | 触发时机              | Offload 目标              | 保留在上下文的内容                   |
 | -------------------- | --------------------- | ------------------------- | ------------------------------------ |
@@ -37,7 +37,7 @@ flowchart LR
 
 ### 内存中的数据结构
 
-CoPaw 的上下文由两部分组成：
+StarClaw 的上下文由两部分组成：
 
 ```mermaid
 flowchart TD
@@ -116,7 +116,7 @@ graph LR
 
 ### 相关代码
 
-- [MemoryCompactionHook](https://github.com/agentscope-ai/CoPaw/blob/main/src/copaw/agents/hooks/memory_compaction.py)
+- [MemoryCompactionHook](https://github.com/efairy/StarClaw/blob/main/src/starclaw/agents/hooks/memory_compaction.py)
 - [compact_tool_result](https://github.com/agentscope-ai/ReMe/blob/v0.3.1.6/reme/memory/file_based/components/tool_result_compactor.py)
 - [check_context](https://github.com/agentscope-ai/ReMe/blob/v0.3.1.6/reme/memory/file_based/components/context_checker.py)
 - [compact_memory](https://github.com/agentscope-ai/ReMe/blob/v0.3.1.6/reme/memory/file_based/components/compactor.py)
@@ -144,7 +144,7 @@ flowchart LR
 
 ## 压缩机制
 
-当上下文接近限制时，CoPaw 会自动触发压缩，将旧对话浓缩为结构化摘要。
+当上下文接近限制时，StarClaw 会自动触发压缩，将旧对话浓缩为结构化摘要。
 
 ### 1. compact_tool_result — 工具结果压缩
 
@@ -257,7 +257,7 @@ graph TB
 
 ## 配置
 
-配置文件位于 `~/.copaw/config.json` 中的 `agents.running` 部分：
+配置文件位于 `~/.starclaw/config.json` 中的 `agents.running` 部分：
 
 **`running` 直接字段：**
 

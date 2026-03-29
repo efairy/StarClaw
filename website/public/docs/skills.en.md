@@ -26,7 +26,7 @@ workspace, you can enable or disable them there.
 
 | Skill                        | Description                                                                                                                                                                 | Source                                                         |
 | ---------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------- |
-| **cron**                     | Scheduled jobs. Create, list, pause, resume, or delete jobs via `copaw cron` or Console **Control → Cron Jobs**; run on a schedule and send results to a channel.           | Built-in                                                       |
+| **cron**                     | Scheduled jobs. Create, list, pause, resume, or delete jobs via `starclaw cron` or Console **Control → Cron Jobs**; run on a schedule and send results to a channel.           | Built-in                                                       |
 | **file_reader**              | Read and summarize text-based files (.txt, .md, .json, .csv, .log, .py, etc.). PDF and Office are handled by the skills below.                                              | Built-in                                                       |
 | **dingtalk_channel_connect** | Helps with DingTalk channel onboarding: guides you through the developer console, key fields, credential lookup (`Client ID` / `Client Secret`), and required manual steps. | Built-in                                                       |
 | **himalaya**                 | Manage emails via CLI (IMAP/SMTP). Use `himalaya` to list, read, search, and organize emails from the terminal; supports multiple accounts and attachments.                 | https://github.com/openclaw/openclaw/tree/main/skills/himalaya |
@@ -58,25 +58,25 @@ take effect for that workspace. Handy if you prefer not to edit files directly.
 
 The **Cron** skill is built in and can be added to a workspace from the skill
 pool. It provides "run on a schedule and send results to a channel." You
-manage jobs with the [CLI](./cli) (`copaw cron`) or in the Console under
+manage jobs with the [CLI](./cli) (`starclaw cron`) or in the Console under
 **Control → Cron Jobs**; no need to edit skill files.
 
 Common operations:
 
-- Create a job: `copaw cron create --type agent --name "xxx" --cron "0 9 * * *" ...`
-- List jobs: `copaw cron list`
-- Check state: `copaw cron state <job_id>`
+- Create a job: `starclaw cron create --type agent --name "xxx" --cron "0 9 * * *" ...`
+- List jobs: `starclaw cron list`
+- Check state: `starclaw cron state <job_id>`
 
 ---
 
 ## Skill Pool
 
-The **Skill Pool** is a shared, local skill repository at `$COPAW_WORKING_DIR/skill_pool/` (default: `~/.copaw/skill_pool/`).
+The **Skill Pool** is a shared, local skill repository at `$STARCLAW_WORKING_DIR/skill_pool/` (default: `~/.starclaw/skill_pool/`).
 It stores built-in skills and any custom skills you choose to share across
 workspaces.
 
 ```
-~/.copaw/
+~/.starclaw/
   skill_pool/                # Shared pool
     skill.json               # Pool manifest (source of truth)
     pdf/
@@ -147,7 +147,7 @@ really want a customized replacement with the same name.
 
 ### Importing built-in skills
 
-When CoPaw is upgraded, packaged built-in skills under `src/` may be newer than
+When StarClaw is upgraded, packaged built-in skills under `src/` may be newer than
 what is in your local pool, or some builtins may have been deleted from the
 pool intentionally.
 
@@ -248,9 +248,9 @@ skill under a workspace's `skills/` directory.
 
 ### Steps
 
-1. Create a directory under `~/.copaw/workspaces/{agent_id}/skills/`, e.g.
+1. Create a directory under `~/.starclaw/workspaces/{agent_id}/skills/`, e.g.
    `my_skill`.
-2. Add a `SKILL.md` file in that directory. The file **must** start with YAML front matter containing both `name` and `description` fields. Write Markdown body after the front matter to describe the capability for the agent. If the skill depends on external binaries or environment variables, declare them in `metadata.requires`; CoPaw exposes them as `require_bins` and `require_envs` metadata, but does not disable the skill automatically.
+2. Add a `SKILL.md` file in that directory. The file **must** start with YAML front matter containing both `name` and `description` fields. Write Markdown body after the front matter to describe the capability for the agent. If the skill depends on external binaries or environment variables, declare them in `metadata.requires`; StarClaw exposes them as `require_bins` and `require_envs` metadata, but does not disable the skill automatically.
 
 ### Example SKILL.md
 
@@ -280,7 +280,7 @@ to `skill.json` as **disabled**. Enable them in the Console or CLI.
 
 Each skill can have a `config` object stored in its manifest entry. This config
 is not just stored metadata — when a skill is effective for the current
-workspace and channel, CoPaw injects that config into the runtime environment
+workspace and channel, StarClaw injects that config into the runtime environment
 for that agent turn, then restores the environment after the turn completes.
 
 You can set config per skill in the Console (**Agent → Skills** → click the
@@ -293,7 +293,7 @@ injected as environment variables. Keys not declared in `requires.env` are
 skipped (but still available via the full JSON variable). If a required key
 is missing from the config, a warning is logged.
 
-The full config is always available as `COPAW_SKILL_CONFIG_<SKILL_NAME>`
+The full config is always available as `STARCLAW_SKILL_CONFIG_<SKILL_NAME>`
 (JSON string), regardless of `requires.env`.
 
 Existing host environment variables are never overwritten.
@@ -327,7 +327,7 @@ The skill can read:
 - `MY_API_KEY` ← from config, matches `requires.env`
 - `BASE_URL` ← from config, matches `requires.env`
 - `timeout` ← not in `requires.env`, only available via the full JSON below
-- `COPAW_SKILL_CONFIG_MY_SKILL` ← full JSON config (always injected)
+- `STARCLAW_SKILL_CONFIG_MY_SKILL` ← full JSON config (always injected)
 
 Python example:
 
@@ -337,7 +337,7 @@ import os
 
 api_key = os.environ.get("MY_API_KEY", "")
 base_url = os.environ.get("BASE_URL", "")
-cfg = json.loads(os.environ.get("COPAW_SKILL_CONFIG_MY_SKILL", "{}"))
+cfg = json.loads(os.environ.get("STARCLAW_SKILL_CONFIG_MY_SKILL", "{}"))
 timeout = cfg.get("timeout", 30)
 ```
 
@@ -353,7 +353,7 @@ When a skill runs, the effective config follows this priority (highest wins):
 2. **Workspace config** — the `config` object in the workspace manifest entry (`skill.json`). This is what you edit in the Console per agent.
 3. **Pool config** — when downloading a pool skill to a workspace, the pool's `config` is copied as the initial workspace config. Subsequent workspace edits take precedence.
 
-For `requires` metadata, the parser checks keys in order: `metadata.openclaw.requires` → `metadata.copaw.requires` → `metadata.requires`. The first one found is used.
+For `requires` metadata, the parser checks keys in order: `metadata.openclaw.requires` → `metadata.starclaw.requires` → `metadata.requires`. The first one found is used.
 
 ---
 
@@ -361,7 +361,7 @@ For `requires` metadata, the parser checks keys in order: `metadata.openclaw.req
 
 ### `skill.json` Structure
 
-Each agent workspace's `skill.json` (e.g., `~/.copaw/workspaces/default/skill.json`) controls which skills are enabled for that agent, which channels they apply to, and the skill configuration parameters.
+Each agent workspace's `skill.json` (e.g., `~/.starclaw/workspaces/default/skill.json`) controls which skills are enabled for that agent, which channels they apply to, and the skill configuration parameters.
 
 **Configuration example:**
 
